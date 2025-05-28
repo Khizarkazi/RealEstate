@@ -6,4 +6,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\style.scssc" />
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\_mixin.scssc" />
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\_responsive.scssc" />
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\_themecolor.scssc" />
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\_theme_color.scssc" />
+    <None Include="wwwroot\Content\spthings\.sass-cache\c271f55aaaf7c7f11c38a51797984cacc713c712\_variables.scssc" />
+  </ItemGroup>
+
 </Project>
