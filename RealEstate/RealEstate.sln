@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197 d17.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EstatePro", "EstatePro\EstatePro.csproj", "{9BA9522B-BE1B-4512-8C94-8AA26BCA9DB2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RealEstate", "RealEstate\RealEstate.csproj", "{D798793E-E46D-4F39-95E9-1F3A8C4E044F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9BA9522B-BE1B-4512-8C94-8AA26BCA9DB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BA9522B-BE1B-4512-8C94-8AA26BCA9DB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BA9522B-BE1B-4512-8C94-8AA26BCA9DB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BA9522B-BE1B-4512-8C94-8AA26BCA9DB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D798793E-E46D-4F39-95E9-1F3A8C4E044F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D798793E-E46D-4F39-95E9-1F3A8C4E044F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D798793E-E46D-4F39-95E9-1F3A8C4E044F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D798793E-E46D-4F39-95E9-1F3A8C4E044F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5063A046-DC53-4625-B72E-B3A9EB903B8E}
+		SolutionGuid = {3C4B9CA9-8DA3-4CF9-BD81-C635F9F3B3AF}
 	EndGlobalSection
 EndGlobal
