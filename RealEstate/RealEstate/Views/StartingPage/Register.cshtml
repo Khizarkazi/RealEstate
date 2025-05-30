@@ -3,7 +3,7 @@
 *@
 @{
 }
-
+@model User
 
 
 <!DOCTYPE html>
@@ -79,7 +79,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">First Name</label>
                                                 <div class="input-group">
-                                                    <input type="text" name="FirstName" class="form-control border-end-0" required>
+                                                    <input type="text" asp-for="FirstName" name="FirstName" class="form-control border-end-0" required>
                                                     <span class="input-group-text border-start-0">
                                                         <i class="ti ti-user"></i>
                                                     </span>
@@ -90,7 +90,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Last Name</label>
                                                 <div class="input-group">
-                                                    <input type="text" name="LastName" class="form-control border-end-0" required>
+                                                    <input type="text" asp-for="LastName" name="LastName" class="form-control border-end-0" required>
                                                     <span class="input-group-text border-start-0">
                                                         <i class="ti ti-user"></i>
                                                     </span>
@@ -101,7 +101,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Email Address</label>
                                                 <div class="input-group">
-                                                    <input type="email" name="Email" class="form-control border-end-0" required>
+                                                    <input type="email" asp-for="Email" name="Email" class="form-control border-end-0" required>
                                                     <span class="input-group-text border-start-0">
                                                         <i class="ti ti-mail"></i>
                                                     </span>
@@ -112,7 +112,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Phone Number</label>
                                                 <div class="input-group">
-                                                    <input type="text" name="PhoneNumber" class="form-control border-end-0">
+                                                    <input type="text" asp-for="PhoneNumber" name="PhoneNumber" class="form-control border-end-0">
                                                     <span class="input-group-text border-start-0">
                                                         <i class="ti ti-phone"></i>
                                                     </span>
@@ -122,7 +122,7 @@
                                             <!-- Role -->
                                             <div class="mb-3">
                                                 <label class="form-label">Role</label>
-                                                <select class="form-select" name="Role" required>
+                                                <select class="form-select" asp-for="Role" name="Role" required>
                                                     <option value="" disabled selected>Select Role</option>
                                                     <option value="Admin">Admin</option>
                                                     <option value="Agent">Agent</option>
@@ -142,7 +142,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Password</label>
                                                 <div class="pass-group">
-                                                    <input type="password" name="Password" class="pass-input form-control" required>
+                                                    <input type="password" asp-for="PasswordHash" name="Password" class="pass-input form-control" required>
                                                     <span class="ti toggle-password ti-eye-off"></span>
                                                 </div>
                                             </div>
@@ -151,7 +151,7 @@
                                             <div class="mb-3">
                                                 <label class="form-label">Confirm Password</label>
                                                 <div class="pass-group">
-                                                    <input type="password" name="ConfirmPassword" class="pass-inputs form-control" required>
+                                                    <input type="password"  name="ConfirmPassword" class="pass-inputs form-control" required>
                                                     <span class="ti toggle-passwords ti-eye-off"></span>
                                                 </div>
                                             </div>

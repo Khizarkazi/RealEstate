@@ -4,7 +4,7 @@
 @{
 }
 
-
+@model User
 
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +79,7 @@
 											<div class="mb-3">
 												<label class="form-label">Email Address</label>
 												<div class="input-group">
-													<input type="text" value="" class="form-control border-end-0">
+													<input type="text" value="" asp-for="Email" class="form-control border-end-0">
 													<span class="input-group-text border-start-0">
 														<i class="ti ti-mail"></i>
 													</span>
@@ -88,7 +88,7 @@
 											<div class="mb-3">
 												<label class="form-label">Password</label>
 												<div class="pass-group">
-													<input type="password" class="pass-input form-control">
+													<input type="password" asp-for="PasswordHash" class="pass-input form-control">
 													<span class="ti toggle-password ti-eye-off"></span>
 												</div>
 											</div>
