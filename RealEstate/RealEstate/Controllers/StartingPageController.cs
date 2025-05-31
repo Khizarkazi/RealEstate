@@ -34,48 +34,59 @@ namespace RealEstate.Controllers
             return View();
         }
 
+        public void UploadFile(IFormFile file, string fpath)
+        {
+            using (var stream = new FileStream(fpath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Register(ProfilePicView e)
         {
             if (ModelState.IsValid)
             {
                 string path = env.WebRootPath;//fetch www.root folder location
-                string filepath = "Content/Images/" + e.ProfilePicture.FileName;//path of your file
+                string filepath = "/Content/Images/" + e.ProfilePicture.FileName;//path of your file
                 string fullpath = Path.Combine(path, filepath);
-                UploadFile(e.ProfilePicture, fullpath);
 
-
-                var prod = new User ()
+                if (e.ProfilePicture != null && e.ProfilePicture.Length > 0)
                 {
+                    UploadFile(e.ProfilePicture, fullpath);
+                }
 
+                var prod = new User()
+                {
                     FirstName = e.FirstName,
                     LastName = e.LastName,
-                    Email=e.Email,
-                    PasswordHash=e.PasswordHash,
-                    PhoneNumber=e.PhoneNumber,
-                    Role=e.Role,
+                    Email = e.Email,
+                    PhoneNumber = e.PhoneNumber,
+                    Role = e.Role,
+                    PasswordHash = e.PasswordHash, // consider hashing
                     ProfilePicture = filepath,
-                    
-                    
                 };
 
-                db.Users.Add(prod);
-                db.SaveChanges();
+                try
+                {
+                    db.Users.Add(prod);
+                    db.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", ex.Message);
+                    return RedirectToAction("Register");
+                }
 
-
-
-                return RedirectToAction("Index");
+                return RedirectToAction("Login");
             }
             else
             {
-                return View();
+                return RedirectToAction("Register");
             }
         }
-        public void UploadFile(IFormFile file, string fpath)
-        {
-            FileStream stream = new FileStream(fpath, FileMode.Create);
-            file.CopyTo(stream);
-        }
+
         [HttpPost]
             public IActionResult Login(string Email, string Password)
             {
