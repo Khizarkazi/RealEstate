@@ -28,6 +28,10 @@
         <div class="main-header-area" id="stickyHeader">
             <div class="classy-nav-container breakpoint-off">
                 <!-- Classy Menu -->
+                @{
+                    var userRole = Context.Session.GetString("UserRole");
+                }
+
                 <nav class="classy-navbar justify-content-between" id="southNav">
 
                     <!-- Logo -->
@@ -49,74 +53,68 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="#">Home</a></li>
-                                <li>
-                                    <a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">Home</a></li>
-                                        <li><a href="#">About Us</a></li>
-                                        <li>
-                                            <a href="#">Listings</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Listings</a></li>
-                                                <li><a href="#">Single Listings</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">Blog</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Blog</a></li>
-                                                <li><a href="#">Single Blog</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Contact</a></li>
-                                        <li><a href="#">Elements</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">About Us</a></li>
-                                <li><a href="#">Properties</a></li>
-                                <li><a href="#">Blog</a></li>
-                                <li><a asp-controller="StartingPage" asp-action="Login">Login</a></li>
+                                @if (string.IsNullOrEmpty(userRole))
+                                {
+                                    <!-- PRE-LOGIN LINKS -->
+                                    <li><a href="#">Home</a></li>
+                                    <li>
+                                        <a href="#">Pages</a>
+                                        <ul class="dropdown">
+                                            <li><a href="#">Home</a></li>
+                                            <li><a href="#">About Us</a></li>
+                                            <li>
+                                                <a href="#">Listings</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="#">Listings</a></li>
+                                                    <li><a href="#">Single Listings</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Blog</a>
+                                                <ul class="dropdown">
+                                                    <li><a href="#">Blog</a></li>
+                                                    <li><a href="#">Single Blog</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="#">Contact</a></li>
+                                            <li><a href="#">Elements</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">About Us</a></li>
+                                    <li><a href="#">Properties</a></li>
+                                    <li><a href="#">Blog</a></li>
+                                    <li><a asp-controller="StartingPage" asp-action="Login">Login</a></li>
+                                    <li><a asp-controller="StartingPage" asp-action="Register">Register</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                }
+                                else
+                                {
+                                    <!-- POST-LOGIN ROLE-SPECIFIC LINKS -->
+                                    @if (userRole == "Admin")
+                                    {
+                                        <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
+                                        <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
+                                        <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
+                                    }
+                                    else if (userRole == "Agent")
+                                    {
+                                        <li><a asp-controller="Agent" asp-action="Dashboard">Agent Dashboard</a></li>
+                                    }
+                                    else if (userRole == "Buyer")
+                                    {
+                                        <li><a asp-controller="Buyer" asp-action="Dashboard">Buyer Dashboard</a></li>
+                                    }
+                                    else if (userRole == "Seller")
+                                    {
+                                        <li><a asp-controller="Seller" asp-action="Dashboard">Seller Dashboard</a></li>
+                                    }
+                                    else if (userRole == "Tenant")
+                                    {
+                                        <li><a asp-controller="Tenant" asp-action="Dashboard">Tenant Dashboard</a></li>
+                                    }
 
-                                <!-- <li><a href="#">Mega Menu</a>
-                                    <div class="megamenu">
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Headline 1</li>
-                                            <li><a href="#">Mega Menu Item 1</a></li>
-                                            <li><a href="#">Mega Menu Item 2</a></li>
-                                            <li><a href="#">Mega Menu Item 3</a></li>
-                                            <li><a href="#">Mega Menu Item 4</a></li>
-                                            <li><a href="#">Mega Menu Item 5</a></li>
-                                        </ul>
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Headline 2</li>
-                                            <li><a href="#">Mega Menu Item 1</a></li>
-                                            <li><a href="#">Mega Menu Item 2</a></li>
-                                            <li><a href="#">Mega Menu Item 3</a></li>
-                                            <li><a href="#">Mega Menu Item 4</a></li>
-                                            <li><a href="#">Mega Menu Item 5</a></li>
-                                        </ul>
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Headline 3</li>
-                                            <li><a href="#">Mega Menu Item 1</a></li>
-                                            <li><a href="#">Mega Menu Item 2</a></li>
-                                            <li><a href="#">Mega Menu Item 3</a></li>
-                                            <li><a href="#">Mega Menu Item 4</a></li>
-                                            <li><a href="#">Mega Menu Item 5</a></li>
-                                        </ul>
-                                        <ul class="single-mega cn-col-4">
-                                            <li class="title">Headline 4</li>
-                                            <li><a href="#">Mega Menu Item 1</a></li>
-                                            <li><a href="#">Mega Menu Item 2</a></li>
-                                            <li><a href="#">Mega Menu Item 3</a></li>
-                                            <li><a href="#">Mega Menu Item 4</a></li>
-                                            <li><a href="#">Mega Menu Item 5</a></li>
-                                        </ul>
-                                    </div>
-                                </li> -->
-
-
-                                <li><a href="#">Contact</a></li>
+                                    <li><a asp-controller="StartingPage" asp-action="Logout">Logout</a></li>
+                                }
                             </ul>
 
                             <!-- Search Form -->
@@ -133,6 +131,7 @@
                         <!-- Nav End -->
                     </div>
                 </nav>
+
             </div>
         </div>
     </header>

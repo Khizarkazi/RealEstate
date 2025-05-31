@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Data;
 using RealEstate.Models;
+using System.Data;
 
 namespace RealEstate.Controllers
 {
@@ -24,6 +25,51 @@ namespace RealEstate.Controllers
             return View();
         }
 
+        
+        [HttpPost]
+        public IActionResult Login(string Email, string PasswordHash)
+        {
+            var user = db.Users.SingleOrDefault(x => x.Email == Email);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Invalid EmailId");
+                return View();
+            }
+
+            if (user.PasswordHash != PasswordHash)  // Replace with hashed comparison in production
+            {
+                ModelState.AddModelError("", "Invalid Password");
+                return View();
+            }
+
+            HttpContext.Session.SetString("UserEmail", user.Email);
+            HttpContext.Session.SetString("UserRole", user.Role);
+
+            switch (user.Role)
+            {
+                case "Admin":
+                    return RedirectToAction("Dashboard", "Admin");
+
+                case "Agent":
+                    return RedirectToAction("Dashboard", "Agent");
+
+                case "Buyer":
+                    return RedirectToAction("Dashboard", "Buyer");
+
+                case "Seller":
+                    return RedirectToAction("Dashboard", "Seller");
+
+                case "Tenant":
+                    return RedirectToAction("Dashboard", "Tenant");
+
+                default:
+                    ModelState.AddModelError("", "Unknown role");
+                    return View();
+            }
+        }
+
+
 
         public IActionResult Register()
         {
@@ -42,9 +88,16 @@ namespace RealEstate.Controllers
             }
         }
 
+<<<<<<< Updated upstream
         [HttpPost]        
        public IActionResult Register(ProfilePicView e)
+=======
+        [HttpPost]
+        
+        public IActionResult Register(ProfilePicView e)
+>>>>>>> Stashed changes
         {
+            e.CreatedAt=DateTime.Now;
             if (ModelState.IsValid)
             {
                 string path = env.WebRootPath;//fetch www.root folder location
@@ -66,6 +119,10 @@ namespace RealEstate.Controllers
                     Role = e.Role,
                     PasswordHash = e.PasswordHash, // consider hashing
                     ProfilePicture = "/"+filepath,
+<<<<<<< Updated upstream
+=======
+                    CreatedAt=e.CreatedAt
+>>>>>>> Stashed changes
                 };
 
                 
@@ -79,56 +136,30 @@ namespace RealEstate.Controllers
             }
         }
 
-        [HttpPost]
-            public IActionResult Login(string Email, string Password)
-            {
-                var user = db.Users.SingleOrDefault(x => x.Email == Email);
+        //    private IActionResult RedirectToDashboard(string role)
+        //{
+        //    switch (role)
+        //    {
+        //        case "Admin":
+        //            return RedirectToAction("Dashboard", "Admin");
 
-                if (user == null)
-                {
-                    TempData["erroremail"] = "Invalid EmailId";
-                    return View();
-                }
+        //        case "Agent":
+        //            return RedirectToAction("AgentDashboard", "Dashboard");
 
-                if (user.PasswordHash != Password) // Consider using hashing comparison
-                {
-                    TempData["errorpass"] = "Invalid Password";
-                    return View();
-                }
+        //        case "Buyer":
+        //            return RedirectToAction("BuyerDashboard", "Dashboard");
 
-                // Set session
-                //HttpContext.Session.SetString("UserEmail", user.Email);
-                //HttpContext.Session.SetString("UserRole", user.Role);
+        //        case "Seller":
+        //            return RedirectToAction("SellerDashboard", "Dashboard");
 
-                // Redirect based on role
-                return RedirectToDashboard(user.Role);
+        //        case "Tenant":
+        //            return RedirectToAction("TenantDashboard", "Dashboard");
 
-
-            }
-            private IActionResult RedirectToDashboard(string role)
-        {
-            switch (role)
-            {
-                case "Admin":
-                    return RedirectToAction("AdminDashboard", "Dashboard");
-
-                case "Agent":
-                    return RedirectToAction("AgentDashboard", "Dashboard");
-
-                case "Buyer":
-                    return RedirectToAction("BuyerDashboard", "Dashboard");
-
-                case "Seller":
-                    return RedirectToAction("SellerDashboard", "Dashboard");
-
-                case "Tenant":
-                    return RedirectToAction("TenantDashboard", "Dashboard");
-
-                default:
-                    TempData["errorrole"] = "Unknown role";
-                    return RedirectToAction("Login");
-            }
-        }
+        //        default:
+        //            TempData["errorrole"] = "Unknown role";
+        //            return RedirectToAction("Login");
+        //    }
+        //}
 
     }
 

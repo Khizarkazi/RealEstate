@@ -27,9 +27,9 @@ namespace RealEstate.Models
 
         public string ProfilePicture { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; }
 
-        public ICollection<Property> Properties { get; set; }
+        public ICollection<Property>? Properties { get; set; }
 
 
     }
