@@ -38,32 +38,39 @@
                         </div>
 
                         @* Start of form *@
-                        <form asp-action="Register" asp-controller="StartingPage" method="post" enctype="multipart/form-data">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        @* <form asp-action="Register" asp-controller="StartingPage" method="post" enctype="multipart/form-data"> *@
+
+                        <form method="post" enctype="multipart/form-data">
+                            @* @Html.ValidationSummary(true, "", new { @class = "text-danger" }) *@
+                            <span asp-validation-summary="All" class="text-danger"></span>
 
                             <div class="mb-3">
                                 <label  class="form-label">First Name</label>
                                 <input asp-for="FirstName" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
                             </div>
 
 
                             <div class="mb-3">
                                 <label  class="form-label">Last Name</label>
                                 <input asp-for="LastName" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                               @*  @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="LastName" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label  class="form-label">Email Address</label>
                                 <input asp-for="Email" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label  class="form-label">Phone Number</label>
                                 <input asp-for="PhoneNumber" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
@@ -76,19 +83,22 @@
                                     <option>Seller</option>
                                     <option>Tenant</option>
                                 </select>
-                                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="Role" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label  class="form-label">Profile Picture</label>
                                 <input asp-for="ProfilePicture" type="file" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.ProfilePicture, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="ProfilePicture" class="text-danger"></span>
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Password</label>
                                 <input asp-for="PasswordHash" type="password" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" })
+                                @* @Html.ValidationMessageFor(model => model.PasswordHash, "", new { @class = "text-danger" }) *@
+                                <span asp-validation-for="PasswordHash" class="text-danger"></span>
                             </div>
 
                             @* <div class="mb-3 form-check">
@@ -126,6 +136,16 @@
     <script src="~/content/logregis/assets/js/bootstrap.bundle.min.js"></script>
     <script src="~/content/logregis/assets/js/feather.min.js"></script>
     <script src="~/content/logregis/assets/js/script.js"></script>
+
+
+
+
+    @section scripts
+    {
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+
+
 </body>
 
 </html>

@@ -42,15 +42,15 @@ namespace RealEstate.Controllers
             }
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Register(ProfilePicView e)
+        [HttpPost]        
+       public IActionResult Register(ProfilePicView e)
         {
             if (ModelState.IsValid)
             {
                 string path = env.WebRootPath;//fetch www.root folder location
-                string filepath = "/Content/Images/" + e.ProfilePicture.FileName;//path of your file
+                string filepath = "Content/Images/" + e.ProfilePicture.FileName;//path of your file
                 string fullpath = Path.Combine(path, filepath);
+               
 
                 if (e.ProfilePicture != null && e.ProfilePicture.Length > 0)
                 {
@@ -65,20 +65,12 @@ namespace RealEstate.Controllers
                     PhoneNumber = e.PhoneNumber,
                     Role = e.Role,
                     PasswordHash = e.PasswordHash, // consider hashing
-                    ProfilePicture = filepath,
+                    ProfilePicture = "/"+filepath,
                 };
 
-                try
-                {
+                
                     db.Users.Add(prod);
                     db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", ex.Message);
-                    return RedirectToAction("Register");
-                }
-
                 return RedirectToAction("Login");
             }
             else

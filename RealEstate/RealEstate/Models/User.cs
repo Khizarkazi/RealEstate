@@ -25,7 +25,7 @@ namespace RealEstate.Models
         [Required]
         public string Role { get; set; } // Use enum or custom validation if needed
 
-        public string ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
