@@ -88,14 +88,12 @@ namespace RealEstate.Controllers
             }
         }
 
-<<<<<<< Updated upstream
-        [HttpPost]        
-       public IActionResult Register(ProfilePicView e)
-=======
+
+
         [HttpPost]
         
         public IActionResult Register(ProfilePicView e)
->>>>>>> Stashed changes
+
         {
             e.CreatedAt=DateTime.Now;
             if (ModelState.IsValid)
@@ -119,10 +117,9 @@ namespace RealEstate.Controllers
                     Role = e.Role,
                     PasswordHash = e.PasswordHash, // consider hashing
                     ProfilePicture = "/"+filepath,
-<<<<<<< Updated upstream
-=======
+
                     CreatedAt=e.CreatedAt
->>>>>>> Stashed changes
+
                 };
 
                 
