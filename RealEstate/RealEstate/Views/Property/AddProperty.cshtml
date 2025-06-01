@@ -14,73 +14,84 @@
 }
 
 
-<form method="post" enctype="multipart/form-data">
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">Add Property</h3>
+        </div>
+        <div class="card-body">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="Status" value="Not Approved" />
 
-    <h1>Add Property</h1>
+                <div class="mb-3">
+                    <label asp-for="Title" class="form-label">Title</label>
+                    <input type="text" asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
 
-    @* User id <input type="text" asp-for="UserId" readonly value="@userid" /><br /> *@
-   @*  <input type="hidden" asp-for="UserId" value="@userid" /> *@
-    <input type="hidden" asp-for="Status" value="Not Approved" />
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label">Description</label>
+                    <input type="text" asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
 
-    Title <input type="text" asp-for="Title"><br />
-    <span asp-validation-for="Title" class="text-danger"></span>
-    
+                <div class="mb-3">
+                    <label asp-for="Price" class="form-label">Price</label>
+                    <input type="number" asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
 
-    @* description <textarea asp-for="Description"></textarea><br /> *@
-    description <input type="text" asp-for="Description"><br />
-    <span asp-validation-for="Description" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="Address" class="form-label">Address</label>
+                    <input type="text" asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
 
-    price <input  type="number" asp-for="Price"/><br />
-    <span asp-validation-for="Price" class="text-danger"></span>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="City" class="form-label">City</label>
+                        <input type="text" asp-for="City" class="form-control" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
 
-    @* Address <textarea asp-for="Address"></textarea><br /> *@
-    Address <input type="text" asp-for="Address" /><br />
-    <span asp-validation-for="Address" class="text-danger"></span>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="State" class="form-label">State</label>
+                        <input type="text" asp-for="State" class="form-control" />
+                        <span asp-validation-for="State" class="text-danger"></span>
+                    </div>
 
-    city <input type="text" asp-for="City" /><br />
-    <span asp-validation-for="City" class="text-danger"></span>
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="ZipCode" class="form-label">Zip Code</label>
+                        <input type="text" asp-for="ZipCode" class="form-control" />
+                        <span asp-validation-for="ZipCode" class="text-danger"></span>
+                    </div>
+                </div>
 
-    state <input type="text" asp-for="State" /><br />
-    <span asp-validation-for="State" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="PropertyType" class="form-label">Property Type</label>
+                    <select asp-for="PropertyType" class="form-select">
+                        <option value="">-- Select Property Type --</option>
+                        <option>Apartment</option>
+                        <option>Independent House</option>
+                        <option>Plot / Land</option>
+                        <option>Builder Floor</option>
+                        <option>Villa</option>
+                    </select>
+                    <span asp-validation-for="PropertyType" class="text-danger"></span>
+                </div>
 
-    zipcode<input type="text" asp-for="ZipCode" /><br />
-    <span asp-validation-for="ZipCode" class="text-danger"></span>
+                <div class="mb-3">
+                    <label asp-for="Pimg" class="form-label">Upload Images</label>
+                    <input type="file" asp-for="Pimg" multiple class="form-control" />
+                    <span asp-validation-for="Pimg" class="text-danger"></span>
+                </div>
 
-    PropertyType
-    <select asp-for="PropertyType" class="form-control">
-        @* <option value="">-- Select Property Type --</option>
-        <option value="Apartment">Apartment</option>
-        <option value="Independent House">Independent House</option>
-        <option value="Villa">Villa</option>
-        <option value="Plot">Plot / Land</option>
-        <option value="Builder Floor">Builder Floor</option>
-        <option value="Farmhouse">Farmhouse</option>
-        <option value="Studio Apartment">Studio Apartment</option>
-        <option value="Office Space">Office Space</option>
-        <option value="Shop">Shop / Showroom</option>
-        <option value="Warehouse">Warehouse</option>
-        <option value="Industrial Building">Industrial Building</option> *@
+                <button type="submit" class="btn btn-success w-100">Submit Property</button>
+            </form>
+        </div>
+    </div>
+</div>
 
-
-      
-        <option >Apartment</option>
-        <option >Independent House</option>
-        <option >Plot / Land</option>
-        <option >Builder Floor</option>
-        <option >Villa</option>
-       
-
-
-
-    </select><br />
-    <span asp-validation-for="PropertyType" class="text-danger"></span>
-
-    pics <input type="file" asp-for="Pimg" multiple />
-    <span asp-validation-for="Pimg" class="text-danger"></span><br />
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-
-</form>
 
 
 

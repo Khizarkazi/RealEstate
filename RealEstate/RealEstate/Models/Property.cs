@@ -33,7 +33,7 @@ namespace RealEstate.Models
         [Required]
         public string Status { get; set; }
 
-        [ForeignKey("Owner ")]
+        [ForeignKey("Owner")]
         public int UserId { get; set; }
 
         public User Owner { get; set; }

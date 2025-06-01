@@ -28,9 +28,14 @@ namespace RealEstate.Controllers
         [HttpPost]
         public IActionResult AddProperty(Propertyviews vie)
         {
+
+            vie.UserId = int.Parse(HttpContext.Session.GetString("UserID"));
+            vie.CreatedAt = DateTime.Now;
+
+
             if (ModelState.IsValid)
             {
-                vie.UserId = int.Parse(HttpContext.Session.GetString("UserID"));
+                
 
                 pro.addproperty(vie);
                 TempData["msg"] = "Property Added Succesfully";

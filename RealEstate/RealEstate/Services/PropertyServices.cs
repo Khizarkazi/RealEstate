@@ -49,7 +49,7 @@ namespace RealEstate.Services
                 PropertyType = view.PropertyType,
                 Status = view.Status,
                 UserId = view.UserId,
-                CreatedAt = DateTime.Now,
+                CreatedAt = view.CreatedAt,
                 Pimg = string.Join(",", mpath), // Join all image paths
                 
             };
@@ -69,17 +69,6 @@ namespace RealEstate.Services
 
 
 
-        public List<Models.Property> FetchProperties()
-        {
-            var data = db.Properties.ToList();
-            return data;
-        }
-
-
-
-
-
-
         public void UploadFile(IFormFile file, string fpath)
         {
             if (!Directory.Exists(Path.GetDirectoryName(fpath)))
@@ -93,7 +82,8 @@ namespace RealEstate.Services
 
         List<Models.Property> IPropertiesRepo.FetchProperties()
         {
-            throw new NotImplementedException();
+            var data = db.Properties.ToList();
+            return data;
         }
     }
 }
