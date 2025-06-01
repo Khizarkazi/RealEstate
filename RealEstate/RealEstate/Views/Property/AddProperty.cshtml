@@ -19,10 +19,11 @@
     <h1>Add Property</h1>
 
     @* User id <input type="text" asp-for="UserId" readonly value="@userid" /><br /> *@
-    @* <input type="hidden" asp-for="UserId" value="@userid" /> *@
+   @*  <input type="hidden" asp-for="UserId" value="@userid" /> *@
     <input type="hidden" asp-for="Status" value="Not Approved" />
 
-
+    Title <input type="text" asp-for="Title"><br />
+    <span asp-validation-for="Title" class="text-danger"></span>
     
 
     @* description <textarea asp-for="Description"></textarea><br /> *@

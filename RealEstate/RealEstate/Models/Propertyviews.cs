@@ -6,6 +6,7 @@ namespace RealEstate.Models
     public class Propertyviews
     {
 
+
         
         
 
