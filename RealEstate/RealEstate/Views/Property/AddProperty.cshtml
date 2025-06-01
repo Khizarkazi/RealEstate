@@ -1,27 +1,32 @@
 ﻿@model Propertyviews
 @{
     Layout = "_Layout";
-   
+
 }
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var userid = int.Parse(Context.Session.GetString("UserID").ToString());
+    var time = DateTime.Now;
 }
 
-@{
-    var userid = Context.Session.GetString("UserID");
-}
+
 
 
 <div class="container mt-5">
     <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-black text-white">
             <h3 class="mb-0">Add Property</h3>
         </div>
         <div class="card-body">
+
+
             <form method="post" enctype="multipart/form-data">
-                <input type="hidden" asp-for="Status" value="Not Approved" />
+
+                <input type="hidden" asp-for="Status" value="Not Approved" /> 
+                <input type="hidden" asp-for="UserId" value="@userid" />
+                <input type="hidden" asp-for="CreatedAt" value="@time" />
 
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label">Title</label>
