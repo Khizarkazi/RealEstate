@@ -3,12 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Models
 {
-    public class Property
+    public class Propertyviews
     {
-        [Key]
-        public int PropertyId { get; set; }
 
-        public string Pimg { get; set; }
+        
+        
+
+        public List<IFormFile> Pimg { get; set; }
 
         [Required, MaxLength(255)]
         public string Title { get; set; }
@@ -44,6 +45,7 @@ namespace RealEstate.Models
         public ICollection<Appointment>? Appointments { get; set; }
         public ICollection<Review>? Reviews { get; set; }
         public ICollection<LeaseAgreement>? LeaseAgreements { get; set; }
+
 
 
     }

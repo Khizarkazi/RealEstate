@@ -45,6 +45,7 @@ namespace RealEstate.Controllers
 
             HttpContext.Session.SetString("UserEmail", user.Email);
             HttpContext.Session.SetString("UserRole", user.Role);
+            HttpContext.Session.SetString("UserID", user.UserId.ToString());
 
             switch (user.Role)
             {

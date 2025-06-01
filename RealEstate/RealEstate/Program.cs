@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstate.Data;
+using RealEstate.RepoDAL;
+using RealEstate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,13 +9,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Register database context
-builder.Services.AddDbContext<RealEstateContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("con"))
-);
+builder.Services.AddDbContext<RealEstateContext>
+    (
+        options => options.UseSqlServer
+        (
+            builder.Configuration.GetConnectionString("con")
+        )
+    );
+
+builder.Services.AddScoped<IPropertiesRepo, PropertyServices>();
 
 // ✅ Register session services
 builder.Services.AddDistributedMemoryCache(); // Required
 builder.Services.AddSession(); // Required
+
 
 var app = builder.Build();
 
