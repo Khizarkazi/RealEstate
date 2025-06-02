@@ -29,7 +29,7 @@ namespace RealEstate.Controllers
         public IActionResult AddProperty(Propertyviews vie)
         {
 
-            vie.UserId = int.Parse(HttpContext.Session.GetString("UserID"));
+            vie.UserId = int.Parse(HttpContext.Session.GetString("UserID").ToString());
             vie.CreatedAt = DateTime.Now;
 
 

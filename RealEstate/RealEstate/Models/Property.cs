@@ -40,6 +40,8 @@ namespace RealEstate.Models
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
+       
+
         public ICollection<Booking>? Bookings { get; set; }
         public ICollection<Appointment>? Appointments { get; set; }
         public ICollection<Review>? Reviews { get; set; }

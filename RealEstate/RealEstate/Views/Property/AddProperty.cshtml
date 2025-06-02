@@ -10,7 +10,7 @@
 }
 
 @{
-    var userid = Context.Session.GetString("UserID");
+    var userid = int.Parse(Context.Session.GetString("UserID").ToString());
 }
 
 
@@ -22,6 +22,8 @@
         <div class="card-body">
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" asp-for="Status" value="Not Approved" />
+                <input type="hidden" asp-for="UserId" value="@userid" />
+
 
                 <div class="mb-3">
                     <label asp-for="Title" class="form-label">Title</label>

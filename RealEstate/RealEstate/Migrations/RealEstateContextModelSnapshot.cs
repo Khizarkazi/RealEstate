@@ -130,6 +130,9 @@ namespace RealEstate.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<int>("Bath")
+                        .HasColumnType("int");
+
                     b.Property<string>("City")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -140,6 +143,9 @@ namespace RealEstate.Migrations
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Garage")
+                        .HasColumnType("int");
 
                     b.Property<string>("Pimg")
                         .IsRequired()
@@ -172,6 +178,9 @@ namespace RealEstate.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
+
+                    b.Property<int>("squarefeet")
+                        .HasColumnType("int");
 
                     b.HasKey("PropertyId");
 
