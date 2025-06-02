@@ -28,13 +28,13 @@ namespace RealEstate.Services
 
             foreach (var f in view.Pimg)
             {
-                string path = env.WebRootPath; 
+                string path = env.WebRootPath; // wwwroot path
                 string filepath = "Content/Images/" + f.FileName;
                 string fullpath = Path.Combine(path, filepath);
 
-                UploadFile(f, fullpath); 
+                UploadFile(f, fullpath); // Save file
 
-                mpath.Add(filepath); 
+                mpath.Add(filepath); // Collect image path
             }
 
             var prod = new Models.Property()
@@ -50,7 +50,7 @@ namespace RealEstate.Services
                 Status = view.Status,
                 UserId = view.UserId,
                 CreatedAt = view.CreatedAt,
-                Pimg = string.Join(",", mpath), 
+                Pimg = string.Join(",", mpath), // Join all image paths
                 
             };
 
