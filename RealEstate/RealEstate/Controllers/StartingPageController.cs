@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RealEstate.Data;
 using RealEstate.Models;
+using RealEstate.RepoDAL;
 using System.Data;
 
 namespace RealEstate.Controllers
@@ -9,15 +10,23 @@ namespace RealEstate.Controllers
     {
         RealEstateContext db;
         private readonly IWebHostEnvironment env;
-        public StartingPageController(RealEstateContext db,IWebHostEnvironment env)
+        IPropertiesRepo pro;
+        public StartingPageController(RealEstateContext db,IWebHostEnvironment env, IPropertiesRepo pro)
         {
             this.db = db;
             this.env = env;
+            this.pro = pro;
         }
-        public IActionResult Index()
+        public IActionResult Index(int page = 1)
         {
+            int pageSize = 9;
+            int totalProperties;
+            var paginatedProperties = pro.GetPaginatedProperties(page, pageSize, out totalProperties);
 
-            return View();
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling((double)totalProperties / pageSize);
+
+            return View(paginatedProperties);
         }
 
         public IActionResult Login()
@@ -158,6 +167,20 @@ namespace RealEstate.Controllers
         //            return RedirectToAction("Login");
         //    }
         //}
+
+
+
+        public IActionResult Logout()
+        {
+            
+            HttpContext.Session.Clear();
+
+             
+            return RedirectToAction("Login", "StartingPage");
+        }
+
+
+
 
     }
 

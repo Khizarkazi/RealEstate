@@ -1,7 +1,15 @@
-﻿@*
+﻿@model List<Property>
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+}
+
+@{
+    int cardsPerRow = 3;
+    int count = 0;
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
 }
 
 
@@ -14,6 +22,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
     <!-- Title  -->
     <title>Real Estate Agency</title>
 
@@ -23,6 +45,27 @@
     <!-- Style CSS -->
     <link rel="stylesheet" href="~/content/spthings/style.css">
     
+
+    <style>
+        .property-card {
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+
+            .property-card:hover {
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+                transform: translateY(-5px);
+            }
+
+                .property-card:hover .price-badge {
+                    background-color: brown !important;
+                }
+
+                .property-card:hover .status-badge {
+                    background-color: black !important;
+                }
+    </style>
+
 
 </head>
 
@@ -36,7 +79,7 @@
     <header class="header-area">
 
         <!-- Top Header Area -->
-        <div class="top-header-area">
+        @* <div class="top-header-area">
             <div class="h-100 d-md-flex justify-content-between align-items-center">
                 <div class="email-address">
                     <a href="mailto:contact@realestate.com">contact@realestate.com</a>
@@ -50,7 +93,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> *@
 
         <!-- Main Header Area -->
         <div class="main-header-area" id="stickyHeader">
@@ -77,7 +120,7 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="#">Home</a></li>
+                                <li><a asp-controller="StartinPage" asp-action="Index">Home</a></li>
                                 <li>
                                     <a href="#">Pages</a>
                                     <ul class="dropdown">
@@ -445,263 +488,117 @@
                 </div>
             </div>
 
-            <div class="row">
+            
 
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="100ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature1.jpg" alt="">
 
-                                <div class="tag">
-                                    <span>For Sale</span>
+            <div class="row g-4">
+                @foreach (var property in Model)
+                {
+
+
+                    var imageList = property.Pimg?.Split(',') ?? new string[0];
+                    var carouselId = "carousel-" + Guid.NewGuid().ToString("N");
+                    <a asp-controller="Property" asp-action="singlepageformain" asp-route-id="@property.PropertyId">
+                        <div class="col-12 col-md-6 col-xl-4">
+
+
+
+
+
+                            <div class="card h-100 border-0 property-card">
+                                <div class="position-relative">
+                                    @if (imageList.Length > 0)
+                                    {
+                                        <div id="@carouselId" class="carousel slide" data-bs-ride="carousel">
+                                            <div class="carousel-inner">
+                                                @for (int i = 0; i < imageList.Length; i++)
+                                                {
+                                                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                                                        @* <a href="@Url.Content("~/" + imageList[i].Trim())"> *@
+                                                        <img src="@Url.Content("~/" + imageList[i].Trim())" class="d-block w-100" style="height: 220px; object-fit: cover;" />
+                                                        @* </a> *@
+                                                    </div>
+                                                }
+                                            </div>
+                                            @if (imageList.Length > 1)
+                                            {
+                                                <button class="carousel-control-prev" type="button" data-bs-target="#@carouselId" data-bs-slide="prev">
+                                                    <span class="carousel-control-prev-icon"></span>
+                                                </button>
+                                                <button class="carousel-control-next" type="button" data-bs-target="#@carouselId" data-bs-slide="next">
+                                                    <span class="carousel-control-next-icon"></span>
+                                                </button>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/no-image.jpg" class="card-img-top" alt="No Image" style="height: 220px; object-fit: cover;" />
+                                    }
+
+                                    <span class="badge bg-primary position-absolute top-0 end-0 m-2 status-badge">@property.Status</span>
+                                    <span class="badge bg-success position-absolute bottom-0 start-0 m-2 fs-6 price-badge">₹@property.Price.ToString("N0")</span>
                                 </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">@property.Title</h5>
+                                    <p class="card-text text-muted mb-1">
+                                        <i class="bi bi-geo-alt-fill text-danger me-1"></i>@property.Address, @property.City
+                                    </p>
+                                    <p class="card-text">@property.Description</p>
+                                </div>
+
+                                <div class="card-footer bg-white border-top-0">
+                                    <div class="d-flex justify-content-between text-muted small">
+                                        <span><i class="bi bi-house-door-fill me-1"></i>@property.PropertyType</span>
+                                        <span><i class="bi bi-clock-history me-1"></i>@property.CreatedAt.ToString("dd MMM yyyy")</span>
+                                        <span><i class="bi bi-person-circle me-1"></i>Owner ID: @property.UserId</span>
+                                    </div>
                                 </div>
                             </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Villa in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
+
+
+
+
+
+
                         </div>
-                    </div>
-                </div>
-
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="200ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature2.jpg" alt="">
-
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Town House in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="300ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature3.jpg" alt="">
-
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Town House in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="400ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature4.jpg" alt="">
-
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Villa in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="500ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature5.jpg" alt="">
-
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Town House in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Single Featured Property -->
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="single-featured-property mb-50 wow fadeInUp" data-wow-delay="600ms">
-                        <!-- Property Thumbnail -->
-                        <a href="#">
-                            <div class="property-thumb">
-                                <img src="~/content/spthings/img/bg-img/feature6.jpg" alt="">
-
-                                <div class="tag">
-                                    <span>For Sale</span>
-                                </div>
-                                <div class="list-price">
-                                    <p>$945 679</p>
-                                </div>
-                            </div>
-                        </a>
-                        <!-- Property Content -->
-                        <div class="property-content">
-                            <h5>Town House in Los Angeles</h5>
-                            <p class="location"><img src="~/content/spthings/img/icons/location.png" alt="">Upper Road 3411, no.34 CA</p>
-                            <p>Integer nec bibendum lacus. Suspendisse dictum enim sit amet libero malesuada.</p>
-                            <div class="property-meta-data d-flex align-items-end justify-content-between">
-                                <div class="new-tag">
-                                    <img src="~/content/spthings/img/icons/new.png" alt="">
-                                </div>
-                                <div class="bathroom">
-                                    <img src="~/content/spthings/img/icons/bathtub.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="garage">
-                                    <img src="~/content/spthings/img/icons/garage.png" alt="">
-                                    <span>2</span>
-                                </div>
-                                <div class="space">
-                                    <img src="~/content/spthings/img/icons/space.png" alt="">
-                                    <span>120 sq ft</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    </a>
+                    count++;
+                }
             </div>
+
+            <!-- Pagination -->
+            @if (totalPages > 1)
+            {
+                <div class="row mt-5">
+                    <div class="col-12 text-center">
+                        <nav>
+                            <ul class="pagination justify-content-center">
+                                @for (int i = 1; i <= totalPages; i++)
+                                {
+                                    <li class="page-item @(i == currentPage ? "active" : "")">
+                                        <a class="page-link" href="@Url.Action("Index", new { page = i })">@i</a>
+                                    </li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+
+
+
+
+
         </div>
     </section>
     <!-- ##### Featured Properties Area End ##### -->
+
+
     <!-- ##### Call To Action Area Start ##### -->
     <section class="call-to-action-area bg-fixed bg-overlay-black" style="background-image: url('@Url.Content("~/content/spthings/img/bg-img/cta.jpg")')">
         <div class="container h-100">

@@ -7,8 +7,9 @@ namespace RealEstate.Models
     {
 
 
-        
-        
+
+        [Key]
+        public int PropertyId { get; set; }
 
         public List<IFormFile> Pimg { get; set; }
 

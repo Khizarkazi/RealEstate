@@ -8,6 +8,18 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <!-- Title  -->
     <title>Real Estate Agency</title>
+    <!-- Bootstrap 5 CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap 5 JS (Bundle includes Popper.js) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/AddProperties.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+
 
     <!-- Favicon  -->
     <link rel="icon" href="~/content/spthings/img/core-img/favicon.ico">
@@ -16,37 +28,11 @@
     <link rel="stylesheet" href="~/content/spthings/style.css">
 </head>
 <body>
-<<<<<<< Updated upstream
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="south-load"></div>
-=======
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RealEstate</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="SalesReport">Reports</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
->>>>>>> Stashed changes
+
     </div>
 
     <!-- ##### Header Area Start ##### -->
@@ -123,6 +109,7 @@
                                         <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
                                         <li><a asp-controller="Property" asp-action="Index">View Property</a></li>
                                         <li><a asp-controller="Property" asp-action="AddProperty">Add Property</a></li>
+                                        
                                     }
                                     else if (userRole == "Agent")
                                     {
@@ -131,6 +118,9 @@
                                     else if (userRole == "Buyer")
                                     {
                                         <li><a asp-controller="Buyer" asp-action="Dashboard">Buyer Dashboard</a></li>
+                                        <li><a asp-controller="Property" asp-action="usersidepage">Property</a></li>
+                                        <li><a asp-controller="" asp-action="">Reviews </a></li>
+
                                     }
                                     else if (userRole == "Seller")
                                     {
@@ -297,5 +287,7 @@
 
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    
 </body>
 </html>

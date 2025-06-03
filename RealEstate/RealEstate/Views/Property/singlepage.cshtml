@@ -1,0 +1,101 @@
+﻿@model RealEstate.Models.Property
+
+@{
+    Layout = "_Layout";
+
+}
+@{
+    var imageList = Model.Pimg?.Split(',') ?? new string[0];
+}
+
+<!-- ##### Listings Content Area Start ##### -->
+<section class="listings-content-wrapper section-padding-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <!-- Property Image Carousel -->
+                <div class="single-listings-sliders owl-carousel">
+                    @foreach (var img in imageList)
+                    {
+                        <img src="@Url.Content("~/" + img.Trim())" alt="Property Image" style="height:400px; object-fit:cover;">
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-lg-10">
+                <div class="listings-content">
+                    <!-- Price -->
+                    <div class="list-price">
+                        <p>₹@Model.Price.ToString("N0")</p>
+                    </div>
+                    <h5>@Model.Title</h5>
+                    <p class="location">
+                        <img src="~/Content/spthings/img/icons/location.png" alt="Location Icon" />
+                        @Model.Address, @Model.City, @Model.State - @Model.ZipCode
+                    </p>
+                    <p>@Model.Description</p>
+
+                    <!-- Meta Info (Static for now; replace with dynamic if needed) -->
+                    <div class="property-meta-data d-flex align-items-end mt-4">
+                        <div class="new-tag">
+                            <img src="~/Content/spthings/img/icons/new.png" alt="New" />
+                        </div>
+                        <div class="bathroom">
+                            <img src="~/Content/spthings/img/icons/bathtub.png" alt="Bath" />
+                            <span>2</span>
+                        </div>
+                        <div class="garage">
+                            <img src="~/Content/spthings/img/icons/garage.png" alt="Garage" />
+                            <span>2</span>
+                        </div>
+                        <div class="space">
+                            <img src="~/Content/spthings/img/icons/space.png" alt="Space" />
+                            <span>120 sq ft</span>
+                        </div>
+                    </div>
+
+                    <!-- Features (You can make dynamic if available in DB) -->
+                    <ul class="listings-core-features d-flex flex-wrap mt-4">
+                        <li><i class="fa fa-check"></i> Gated Community</li>
+                        <li><i class="fa fa-check"></i> Automatic Sprinklers</li>
+                        <li><i class="fa fa-check"></i> Fireplace</li>
+                        <li><i class="fa fa-check"></i> Window Shutters</li>
+                        <li><i class="fa fa-check"></i> Ocean Views</li>
+                        <li><i class="fa fa-check"></i> Heated Floors</li>
+                        <li><i class="fa fa-check"></i> Private Patio</li>
+                        <li><i class="fa fa-check"></i> Beach Access</li>
+                        <li><i class="fa fa-check"></i> Rooftop Terrace</li>
+                    </ul>
+
+                    <!-- Action Buttons -->
+                    <div class="listings-btn-groups mt-4">
+                        
+                            <a href="#" class="btn south-btn active">Buy</a>
+                        
+                            <a href="#" class="btn south-btn active">Rent</a>
+                        
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Listings Content Area End ##### -->
+<!-- Optional: Include Owl Carousel JS if not already -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $(".owl-carousel").owlCarousel({
+            items: 1,
+            loop: true,
+            nav: true,
+            autoplay: true,
+            autoplayTimeout: 3000
+        });
+    });
+</script>

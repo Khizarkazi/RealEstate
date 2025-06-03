@@ -67,6 +67,20 @@ namespace RealEstate.Services
 
         }
 
+        public List<Models.Property> GetAllProperties()
+        {
+            var data = db.Properties.ToList();
+            return data;
+        }
+
+
+
+        public Models.Property GetPropertyById(int id)
+        {
+            var data = db.Properties.Find(id);
+            return data;
+        }
+
 
 
         public void UploadFile(IFormFile file, string fpath)
@@ -80,10 +94,75 @@ namespace RealEstate.Services
             file.CopyTo(stream);
         }
 
-        List<Models.Property> IPropertiesRepo.FetchProperties()
+
+
+        public void updateproperty(Propertyviews id)
         {
-            var data = db.Properties.ToList();
-            return data;
+            var existing = db.Properties.Find(id.PropertyId);
+            if (existing == null) return;
+
+            existing.Title = id.Title;
+            existing.Description = id.Description;
+            existing.Price = id.Price;
+            existing.Address = id.Address;
+            existing.City = id.City;
+            existing.State = id.State;
+            existing.ZipCode = id.ZipCode;
+            existing.PropertyType = id.PropertyType;
+            existing.Status = id.Status;
+            existing.CreatedAt = id.CreatedAt;
+
+            if (id.Pimg != null && id.Pimg.Any())
+            {
+                var mpath = new List<string>();
+
+                foreach (var f in id.Pimg)
+                {
+                    string path = env.WebRootPath;
+                    string folder = "Content/Images";
+                    string filepath = Path.Combine(folder, f.FileName);
+                    string fullpath = Path.Combine(path, filepath);
+
+                    UploadFile(f, fullpath);
+
+                    mpath.Add(filepath.Replace("\\", "/")); // ensure web-compatible paths
+                }
+
+                existing.Pimg = string.Join(",", mpath);
+            }
+
+            try
+            {
+                db.Properties.Update(existing);
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("DB Save Error: " + ex.Message);
+            }
         }
+
+
+
+
+        public void deleteproperty(int id)
+        {
+            var dd = db.Properties.Find(id);
+            db.Properties.Remove(dd);
+            db.SaveChanges();
+        }
+
+
+
+
+        public List<Models.Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+        {
+            var query = db.Properties.OrderByDescending(p => p.CreatedAt);
+            totalProperties = query.Count();
+            return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        }
+
+
+
     }
 }
