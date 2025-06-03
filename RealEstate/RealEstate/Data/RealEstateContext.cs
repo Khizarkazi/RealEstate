@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RealEstate.Migrations;
 using RealEstate.Models;
 
 namespace RealEstate.Data
@@ -19,7 +20,8 @@ namespace RealEstate.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Report> Reports { get; set; }
-
+        public DbSet<Sales> Sales { get; set; }
+        public DbSet<Samplesales> Samplesales { get; set; }
 
     }
 }
