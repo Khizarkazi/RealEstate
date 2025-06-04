@@ -14,6 +14,12 @@ namespace RealEstate.RepoDAL
 
         void deleteproperty(int id);
 
-        List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties);
+        //List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties);
+
+        List<Models.Property> GetPaginatedProperties(
+   int page, int pageSize, out int totalProperties,
+   string keyword = null, string city = null, string propertyType = null, string status = null);
+
+
     }
 }

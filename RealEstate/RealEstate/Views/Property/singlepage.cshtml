@@ -7,6 +7,11 @@
 @{
     var imageList = Model.Pimg?.Split(',') ?? new string[0];
 }
+@{
+    
+    var userid = int.Parse(Context.Session.GetString("UserID").ToString());
+    var time = DateTime.Now;
+}
 
 <!-- ##### Listings Content Area Start ##### -->
 <section class="listings-content-wrapper section-padding-100">
@@ -78,11 +83,81 @@
                         
                     </div>
 
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+
+
+
+
+@* <div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="fas fa-star-half-alt"></i> Submit Your Review</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+
+                <!-- Hidden Inputs -->
+                <input asp-for="review.UserId" type="hidden"  value="@userid"/>
+                <input asp-for="PropertyId" type="hidden" value="@Model.PropertyId" />
+
+                <!-- Rating Dropdown -->
+                <div class="mb-3">
+                    <label asp-for="review.Rating" class="form-label"><i class="fas fa-star"></i> Rating</label>
+                    <select asp-for="review.Rating" class="form-select">
+                        
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
+                    <span asp-validation-for="review.Rating" class="text-danger"></span>
+                </div>
+
+                <!-- Review Text -->
+                <div class="mb-3">
+                    <label asp-for="review.ReviewText" class="form-label"><i class="fas fa-comment-dots"></i> Your Review</label>
+                    <textarea asp-for="review.ReviewText" class="form-control" rows="5" placeholder="Write your review here..."></textarea>
+                    <span asp-validation-for="review.ReviewText" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+ *@
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ##### Listings Content Area End ##### -->
 <!-- Optional: Include Owl Carousel JS if not already -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />

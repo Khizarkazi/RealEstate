@@ -17,17 +17,40 @@ namespace RealEstate.Controllers
             this.env = env;
             this.pro = pro;
         }
-        public IActionResult Index(int page = 1)
+        //public IActionResult Index(int page = 1)
+        //{
+        //    int pageSize = 9;
+        //    int totalProperties;
+        //    var paginatedProperties = pro.GetPaginatedProperties(page, pageSize, out totalProperties);
+
+        //    ViewBag.CurrentPage = page;
+        //    ViewBag.TotalPages = (int)Math.Ceiling((double)totalProperties / pageSize);
+
+        //    return View(paginatedProperties);
+        //}
+
+        public IActionResult Index(string keyword, string city, string propertyType, string status, int page = 1)
         {
             int pageSize = 9;
             int totalProperties;
-            var paginatedProperties = pro.GetPaginatedProperties(page, pageSize, out totalProperties);
+
+            var paginatedProperties = pro.GetPaginatedProperties(
+                page, pageSize, out totalProperties,
+                keyword, city, propertyType, status
+            );
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalProperties / pageSize);
 
+            // Preserve filters in ViewBag for pagination
+            ViewBag.Keyword = keyword;
+            ViewBag.City = city;
+            ViewBag.PropertyType = propertyType;
+            ViewBag.Status = status;
+
             return View(paginatedProperties);
         }
+
 
         public IActionResult Login()
         {

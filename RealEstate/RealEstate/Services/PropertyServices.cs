@@ -36,7 +36,7 @@ namespace RealEstate.Services
 
                 mpath.Add(filepath); // Collect image path
             }
-
+                                                                                      
             var prod = new Models.Property()
             {
                 Title = view.Title,
@@ -173,12 +173,38 @@ namespace RealEstate.Services
 
 
 
-        public List<Models.Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+        //public List<Models.Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+        //{
+        //    var query = db.Properties.OrderByDescending(p => p.CreatedAt);
+        //    totalProperties = query.Count();
+        //    return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        //}
+
+        public List<Models.Property> GetPaginatedProperties(
+    int page, int pageSize, out int totalProperties,
+    string keyword = null, string city = null, string propertyType = null, string status = null)
         {
-            var query = db.Properties.OrderByDescending(p => p.CreatedAt);
+            var query = db.Properties.AsQueryable();
+
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(p => p.Title.Contains(keyword) || p.Description.Contains(keyword) || p.Address.Contains(keyword));
+
+            if (!string.IsNullOrEmpty(city))
+                query = query.Where(p => p.City.Contains(city));
+
+            if (!string.IsNullOrEmpty(propertyType))
+                query = query.Where(p => p.PropertyType.Contains(propertyType));
+
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(p => p.Status.Contains(status));
+
+            query = query.OrderByDescending(p => p.CreatedAt);
+
             totalProperties = query.Count();
+
             return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
+
 
 
 

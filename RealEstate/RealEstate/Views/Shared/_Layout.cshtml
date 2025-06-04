@@ -103,7 +103,7 @@
                                 }
                                 else
                                 {
-                                    <!-- POST-LOGIN ROLE-SPECIFIC LINKS -->
+                                    
                                     @if (userRole == "Admin")
                                     {
                                         <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
@@ -114,12 +114,14 @@
                                     else if (userRole == "Agent")
                                     {
                                         <li><a asp-controller="Agent" asp-action="Dashboard">Agent Dashboard</a></li>
+                                        <li><a asp-controller="Agent" asp-action="Index">Property List</a></li>
+                                        <li><a asp-controller="Agent" asp-action="AddProperty">Add Property</a></li>
                                     }
                                     else if (userRole == "Buyer")
                                     {
                                         <li><a asp-controller="Buyer" asp-action="Dashboard">Buyer Dashboard</a></li>
                                         <li><a asp-controller="Property" asp-action="usersidepage">Property</a></li>
-                                        <li><a asp-controller="" asp-action="">Reviews </a></li>
+                                       
 
                                     }
                                     else if (userRole == "Seller")
