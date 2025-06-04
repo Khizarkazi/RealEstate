@@ -120,11 +120,11 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a asp-controller="StartinPage" asp-action="Index">Home</a></li>
+                                <li><a asp-controller="StartingPage" asp-action="Index">Home</a></li>
                                 <li>
                                     <a href="#">Pages</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Home</a></li>
+                                        <li><a asp-controller="StartingPage" asp-action="Index">Home</a></li>
                                         <li><a href="#">About Us</a></li>
                                         <li>
                                             <a href="#">Listings</a>
@@ -476,6 +476,7 @@
     </div>
     <!-- ##### Advance Search Area End ##### -->
 
+
     <!-- ##### Featured Properties Area Start ##### -->
     <section class="featured-properties-area section-padding-100-50">
         <div class="container">
@@ -488,24 +489,15 @@
                 </div>
             </div>
 
-            
-
-
             <div class="row g-4">
                 @foreach (var property in Model)
                 {
-
-
                     var imageList = property.Pimg?.Split(',') ?? new string[0];
                     var carouselId = "carousel-" + Guid.NewGuid().ToString("N");
-                    <a asp-controller="Property" asp-action="singlepageformain" asp-route-id="@property.PropertyId">
-                        <div class="col-12 col-md-6 col-xl-4">
 
-
-
-
-
-                            <div class="card h-100 border-0 property-card">
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="card h-100 border-0 property-card">
+                            <a asp-controller="Property" asp-action="singlepageformain" asp-route-id="@property.PropertyId" class="text-decoration-none text-dark">
                                 <div class="position-relative">
                                     @if (imageList.Length > 0)
                                     {
@@ -514,9 +506,7 @@
                                                 @for (int i = 0; i < imageList.Length; i++)
                                                 {
                                                     <div class="carousel-item @(i == 0 ? "active" : "")">
-                                                        @* <a href="@Url.Content("~/" + imageList[i].Trim())"> *@
                                                         <img src="@Url.Content("~/" + imageList[i].Trim())" class="d-block w-100" style="height: 220px; object-fit: cover;" />
-                                                        @* </a> *@
                                                     </div>
                                                 }
                                             </div>
@@ -552,19 +542,12 @@
                                     <div class="d-flex justify-content-between text-muted small">
                                         <span><i class="bi bi-house-door-fill me-1"></i>@property.PropertyType</span>
                                         <span><i class="bi bi-clock-history me-1"></i>@property.CreatedAt.ToString("dd MMM yyyy")</span>
-                                        <span><i class="bi bi-person-circle me-1"></i>Owner ID: @property.UserId</span>
+                                        @* <span><i class="bi bi-person-circle me-1"></i>Owner ID: @property.UserId</span> *@
                                     </div>
                                 </div>
-                            </div>
-
-
-
-
-
-
+                            </a>
                         </div>
-                    </a>
-                    count++;
+                    </div>
                 }
             </div>
 
@@ -587,17 +570,8 @@
                 </div>
             }
         </div>
-
-
-
-
-
-
-
-        </div>
     </section>
     <!-- ##### Featured Properties Area End ##### -->
-
 
     <!-- ##### Call To Action Area Start ##### -->
     <section class="call-to-action-area bg-fixed bg-overlay-black" style="background-image: url('@Url.Content("~/content/spthings/img/bg-img/cta.jpg")')">

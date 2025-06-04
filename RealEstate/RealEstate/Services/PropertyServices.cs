@@ -83,16 +83,34 @@ namespace RealEstate.Services
 
 
 
+        //public void UploadFile(IFormFile file, string fpath)
+        //{
+        //    if (!Directory.Exists(Path.GetDirectoryName(fpath)))
+        //    {
+        //        Directory.CreateDirectory(Path.GetDirectoryName(fpath));
+        //    }
+
+        //    FileStream stream = new FileStream(fpath, FileMode.Create);
+        //    file.CopyTo(stream);
+        //}
         public void UploadFile(IFormFile file, string fpath)
         {
-            if (!Directory.Exists(Path.GetDirectoryName(fpath)))
+            
+            string? directory = Path.GetDirectoryName(fpath);
+            if (!Directory.Exists(directory))
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(fpath));
+                Directory.CreateDirectory(directory);
+            }            
+            if (!System.IO.File.Exists(fpath))
+            {
+                
+                using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
+                {
+                    file.CopyTo(stream);
+                }
             }
-
-            FileStream stream = new FileStream(fpath, FileMode.Create);
-            file.CopyTo(stream);
         }
+
 
 
 
