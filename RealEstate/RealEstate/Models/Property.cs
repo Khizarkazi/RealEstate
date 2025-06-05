@@ -42,6 +42,8 @@ namespace RealEstate.Models
 
      
 
+        //public Review review { get; set; }
+
        
 
         public ICollection<Booking>? Bookings { get; set; }

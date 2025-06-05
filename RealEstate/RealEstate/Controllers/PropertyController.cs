@@ -122,13 +122,59 @@ namespace RealEstate.Controllers
         }
 
 
+        //public IActionResult singlepage(int id)
+        //{
+        //    var data = pro.GetPropertyById(id);
+
+
+        //    return View(data);
+        //}
+
         public IActionResult singlepage(int id)
         {
-            var data = pro.GetPropertyById(id);
-            return View(data);
+            var property = pro.GetPropertyById(id);
+
+            var vm = new PropertyReviewViewModel
+            {
+                Property = property,
+                Review = new Review()
+            };
+
+            return View(vm);
         }
 
-        
+
+        //[HttpPost]
+        //public IActionResult singlepage(Property p)
+        //{
+        //    var data = new Review
+        //    {
+        //        PropertyId=p.PropertyId,
+        //        UserId=p.UserId,
+        //        Rating=p.review.Rating,
+        //        ReviewText=p.review.ReviewText,
+        //        ReviewDate=p.review.ReviewDate
+        //    };
+
+        //    db.Reviews.Add(data);
+        //    db.SaveChanges();
+
+        //    return RedirectToAction("singlepage");
+        //}
+
+        [HttpPost]
+        public IActionResult singlepage(PropertyReviewViewModel vm)
+        {
+            db.Reviews.Add(vm.Review);
+            db.SaveChanges();
+
+            return RedirectToAction("singlepage", new { id = vm.Review.PropertyId });
+        }
+
+
+
+
+
 
         public IActionResult singlepageformain(int id)
         {
