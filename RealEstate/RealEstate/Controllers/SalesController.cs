@@ -13,6 +13,28 @@ namespace RealEstate.Controllers
             _context = context;
         }
 
+<<<<<<< Updated upstream
+=======
+        //public IActionResult SalesChart()
+        //{
+        //    var salesData = _context.Sales
+        //        .Where(s => s.Status == "Completed")
+        //        .AsEnumerable()
+        //        .GroupBy(s => new { s.SaleDate.Year, s.SaleDate.Month })
+        //        .Select(g => new
+        //        {
+        //            Month = $"{g.Key.Year}-{g.Key.Month:D2}",
+        //            TotalSales = g.Sum(s => s.SaleAmount)
+        //        })
+        //        .OrderBy(g => g.Month)
+        //        .ToList();
+
+        //    ViewBag.SalesData = salesData;
+
+        //    return View();
+        //}
+
+>>>>>>> Stashed changes
         public IActionResult SalesChart(string filter = "monthly")
         {
             // Prepare filter dropdown
