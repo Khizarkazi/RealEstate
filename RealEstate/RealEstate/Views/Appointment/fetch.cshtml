@@ -1,0 +1,53 @@
+﻿@model List<Appointment>
+
+<div class="container my-5">
+    <div class="card shadow">
+        <div class="card-header text-white" style="background-color: #28a745;">
+            <h4 class="mb-0">All Appointments</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered text-center">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Appointment ID</th>
+                        <th>User ID</th>
+                        <th>Property ID</th>
+                        <th>Appointment Date</th>
+                        <th>Status</th>
+                        <th>Agent Remark</th>
+                        <th>Preferred Slots</th>
+                        <th>Buyer Contact No</th>
+                        <th>Buyer Email</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td>@i.AppointmentId</td>
+                            <td>@i.UserId</td>
+                            <td>@i.PropertyId</td>
+                            <td>@i.AppointmentDate.ToShortDateString()</td>
+                            <td>@i.Status</td>
+                            <td>@i.AgentRemark</td>
+                            <td>@i.PreferredSlots</td>
+                            <td>@i.BuyerContactNumber</td>
+                            <td>@i.BuyerEmail</td>
+                            <td>
+                                <form asp-action="UpdateRemark" method="post">
+                                    <input type="hidden" name="id" value="@i.AppointmentId" />
+                                    <select name="remark" class="form-select form-select-sm mb-1">
+                                        <option value="Accept" selected="@(i.AgentRemark == "Accept")">Accept</option>
+                                        <option value="Reject" selected="@(i.AgentRemark == "Reject")">Reject</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success btn-sm">Save</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

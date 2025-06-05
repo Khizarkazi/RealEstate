@@ -1,0 +1,26 @@
+﻿@model List<RealEstate.Models.Property>
+@{
+    ViewData["Title"] = "My Properties";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-primary mb-4">My Listed Properties</h2>
+
+<div class="row">
+    @foreach (var p in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card shadow border-0">
+                <img class="card-img-top" src="~/@p.Pimg.Split(',')[0]" alt="Property Image" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@p.Title</h5>
+                    <p class="card-text text-muted">@p.Description?.Substring(0, Math.Min(100, p.Description.Length))...</p>
+                    <p class="card-text"><strong>Price:</strong> ₹@p.Price</p>
+                    <p class="card-text"><strong>Type:</strong> @p.PropertyType</p>
+                    <p class="card-text"><strong>Status:</strong> <span class="badge bg-info">@p.Status</span></p>
+                    <p class="card-text"><strong>Posted On:</strong> @p.CreatedAt.ToShortDateString()</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
