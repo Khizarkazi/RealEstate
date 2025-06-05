@@ -1,0 +1,22 @@
+﻿@model RealEstate.Models.UserRoleCountViewModel
+
+<h2>User Role Summary</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Role</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Enum.GetValues(typeof(RealEstate.Models.UserRole)).Cast<RealEstate.Models.UserRole>())
+        {
+            <tr>
+                <td>@item</td>
+                <td>@Model.RoleCounts.GetValueOrDefault(item, 0)</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-controller="PropertyReport" asp-action="PropReport" class="btn btn-primary" property=" Report">Property Report</a>

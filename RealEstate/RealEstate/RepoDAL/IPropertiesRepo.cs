@@ -15,5 +15,7 @@ namespace RealEstate.RepoDAL
         void deleteproperty(int id);
 
         List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties);
+
+
     }
 }

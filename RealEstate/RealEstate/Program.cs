@@ -18,10 +18,12 @@ builder.Services.AddDbContext<RealEstateContext>
     );
 
 builder.Services.AddScoped<IPropertiesRepo, PropertyServices>();
-
+builder.Services.AddScoped<IUserCountRepo, UserCountService>();
+builder.Services.AddScoped<IPropertyRepo, PropertyReportService>();
 // ✅ Register session services
 builder.Services.AddDistributedMemoryCache(); // Required
 builder.Services.AddSession(); // Required
+
 
 
 var app = builder.Build();
@@ -44,6 +46,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=StartingPage}/{action=Index}/{id?}");
+    pattern: "{controller=PropertyReport}/{action=PropReport}/{id?}");
 
 app.Run();
