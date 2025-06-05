@@ -17,7 +17,7 @@ namespace RealEstate.Data
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
         public DbSet<LeaseAgreement> LeaseAgreements { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Models.Appointment> Appointments { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Report> Reports { get; set; }
         public DbSet<Sales> Sales { get; set; }

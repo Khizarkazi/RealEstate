@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RealEstate.Models.Transaction>
+
+@{
+    ViewData["Title"] = "Transaction History";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h3 class="mb-4">💰 My Transactions</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">You have no transactions yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>🏠 Booking ID</th>
+                        <th>💵 Amount</th>
+                        <th>💳 Method</th>
+                        <th>📅 Date</th>
+                        <th>📦 Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var t in Model)
+                    {
+                        <tr>
+                            <td>@t.BookingId</td>
+                            <td>₹@t.Amount.ToString("N2")</td>
+                            <td>@t.PaymentMethod</td>
+                            <td>@t.TransactionDate.ToString("dd MMM yyyy")</td>
+                            <td>
+                                @if (t.PaymentStatus?.ToLower() == "success")
+                                {
+                                    <span class="badge bg-success">Success</span>
+                                }
+                                else if (t.PaymentStatus?.ToLower() == "pending")
+                                {
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">Failed</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

@@ -1,15 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.AspNetCore.Http;
 using RealEstate.Data;
 using RealEstate.Models;
 using RealEstate.RepoDAL;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 
 namespace RealEstate.Services
 {
     public class PropertyServices : IPropertiesRepo
     {
-
-        public RealEstateContext db;
-        private IWebHostEnvironment env;
+        private readonly RealEstateContext db;
+        private readonly IWebHostEnvironment env;
 
         public PropertyServices(RealEstateContext db, IWebHostEnvironment env)
         {
@@ -17,13 +22,10 @@ namespace RealEstate.Services
             this.env = env;
         }
 
-
+        // ========== Property Methods ==========
 
         public void addproperty(Propertyviews view)
         {
-
-            
-
             var mpath = new List<string>();
 
             foreach (var f in view.Pimg)
@@ -36,8 +38,13 @@ namespace RealEstate.Services
 
                 mpath.Add(filepath); // Collect image path
             }
-
+<<<<<<< Updated upstream
+                                                                                      
             var prod = new Models.Property()
+=======
+
+            var prod = new Property()
+>>>>>>> Stashed changes
             {
                 Title = view.Title,
                 Description = view.Description,
@@ -51,7 +58,6 @@ namespace RealEstate.Services
                 UserId = view.UserId,
                 CreatedAt = view.CreatedAt,
                 Pimg = string.Join(",", mpath), // Join all image paths
-                
             };
 
             try
@@ -63,56 +69,53 @@ namespace RealEstate.Services
             {
                 Console.WriteLine("DB Save Error: " + ex.Message);
             }
-
-
         }
 
-        public List<Models.Property> GetAllProperties()
+        public async Task AddPropertyAsync(Propertyviews model)
         {
-            var data = db.Properties.ToList();
-            return data;
-        }
+            var mpath = new List<string>();
 
-
-
-        public Models.Property GetPropertyById(int id)
-        {
-            var data = db.Properties.Find(id);
-            return data;
-        }
-
-
-
-        //public void UploadFile(IFormFile file, string fpath)
-        //{
-        //    if (!Directory.Exists(Path.GetDirectoryName(fpath)))
-        //    {
-        //        Directory.CreateDirectory(Path.GetDirectoryName(fpath));
-        //    }
-
-        //    FileStream stream = new FileStream(fpath, FileMode.Create);
-        //    file.CopyTo(stream);
-        //}
-        public void UploadFile(IFormFile file, string fpath)
-        {
-            
-            string? directory = Path.GetDirectoryName(fpath);
-            if (!Directory.Exists(directory))
+            foreach (var f in model.Pimg)
             {
-                Directory.CreateDirectory(directory);
-            }            
-            if (!System.IO.File.Exists(fpath))
-            {
-                
-                using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
-                {
-                    file.CopyTo(stream);
-                }
+                string path = env.WebRootPath;
+                string folder = "Content/Images";
+                string filepath = Path.Combine(folder, f.FileName);
+                string fullpath = Path.Combine(path, filepath);
+
+                UploadFile(f, fullpath);
+                mpath.Add(filepath.Replace("\\", "/"));
             }
+
+            var property = new Property()
+            {
+                Title = model.Title,
+                Description = model.Description,
+                Price = model.Price,
+                Address = model.Address,
+                City = model.City,
+                State = model.State,
+                ZipCode = model.ZipCode,
+                PropertyType = model.PropertyType,
+                Status = model.Status,
+                UserId = model.UserId,
+                CreatedAt = model.CreatedAt,
+                Pimg = string.Join(",", mpath),
+            };
+
+            db.Properties.Add(property);
+            await db.SaveChangesAsync();
         }
 
 
+        public List<Property> GetAllProperties()
+        {
+            return db.Properties.ToList();
+        }
 
+        public Property GetPropertyById(int id)
+        {
+            return db.Properties.Find(id);
+        }
 
         public void updateproperty(Propertyviews id)
         {
@@ -160,27 +163,151 @@ namespace RealEstate.Services
             }
         }
 
-
-
-
         public void deleteproperty(int id)
         {
             var dd = db.Properties.Find(id);
-            db.Properties.Remove(dd);
-            db.SaveChanges();
+            if (dd != null)
+            {
+                db.Properties.Remove(dd);
+                db.SaveChanges();
+            }
         }
 
+<<<<<<< Updated upstream
 
 
 
-        public List<Models.Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+        //public List<Models.Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+        //{
+        //    var query = db.Properties.OrderByDescending(p => p.CreatedAt);
+        //    totalProperties = query.Count();
+        //    return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+        //}
+
+        public List<Models.Property> GetPaginatedProperties(
+    int page, int pageSize, out int totalProperties,
+    string keyword = null, string city = null, string propertyType = null, string status = null)
+=======
+        public List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+>>>>>>> Stashed changes
         {
-            var query = db.Properties.OrderByDescending(p => p.CreatedAt);
+            var query = db.Properties.AsQueryable();
+
+            if (!string.IsNullOrEmpty(keyword))
+                query = query.Where(p => p.Title.Contains(keyword) || p.Description.Contains(keyword) || p.Address.Contains(keyword));
+
+            if (!string.IsNullOrEmpty(city))
+                query = query.Where(p => p.City.Contains(city));
+
+            if (!string.IsNullOrEmpty(propertyType))
+                query = query.Where(p => p.PropertyType.Contains(propertyType));
+
+            if (!string.IsNullOrEmpty(status))
+                query = query.Where(p => p.Status.Contains(status));
+
+            query = query.OrderByDescending(p => p.CreatedAt);
+
             totalProperties = query.Count();
+
             return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
+        public void UploadFile(IFormFile file, string fpath)
+        {
+            string? directory = Path.GetDirectoryName(fpath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
 
+            if (!File.Exists(fpath))
+            {
+                using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+        }
 
+<<<<<<< Updated upstream
+
+=======
+        public async Task UploadFileAsync(IFormFile file, string fpath)
+        {
+            string? directory = Path.GetDirectoryName(fpath);
+            if (!Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+
+            if (!File.Exists(fpath))
+            {
+                using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+        }
+
+        // ========== Appointment Methods ==========
+
+        public Appointment AddAppointment(Appointment ap)
+        {
+            try
+            {
+                // Example: assign a default user for demo; in real app, assign logged-in user's id
+                if (ap.UserId == 0) ap.UserId = 1;
+
+                db.Appointments.Add(ap);
+                db.SaveChanges();
+                return ap;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error while saving appointment: " + (ex.InnerException?.Message ?? ex.Message));
+            }
+        }
+
+        public List<Appointment> apn()
+        {
+            return db.Appointments
+                     .OrderByDescending(a => a.AppointmentDate)
+                     .ToList();
+        }
+
+        public List<Appointment> GetAppointmentsByBuyerEmail(string buyerEmail)
+        {
+            return db.Appointments
+                     .Where(a => a.BuyerEmail == buyerEmail)
+                     .OrderByDescending(a => a.AppointmentDate)
+                     .ToList();
+        }
+
+        public List<Appointment> GetAllAppointments()
+        {
+            return db.Appointments.ToList();
+        }
+
+        public List<Property> GetPropertiesBySellerId(int sellerId)
+        {
+            return db.Properties
+                     .Where(p => p.UserId == sellerId)
+                     .OrderByDescending(p => p.CreatedAt)
+                     .ToList();
+        }
+
+        public List<Appointment> GetAppointmentsForSeller(int sellerId)
+        {
+            var sellerPropertyIds = db.Properties
+                                       .Where(p => p.UserId == sellerId)
+                                       .Select(p => p.PropertyId)
+                                       .ToList();
+
+            return db.Appointments
+                     .Where(a => sellerPropertyIds.Contains(a.PropertyId))
+                     .OrderByDescending(a => a.AppointmentDate)
+                     .ToList();
+        }
+>>>>>>> Stashed changes
     }
 }

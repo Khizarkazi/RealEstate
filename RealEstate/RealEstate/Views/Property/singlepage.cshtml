@@ -1,11 +1,18 @@
-﻿@model RealEstate.Models.Property
+﻿@* @model RealEstate.Models.Property *@
+@model PropertyReviewViewModel
+
 
 @{
     Layout = "_Layout";
 
 }
 @{
-    var imageList = Model.Pimg?.Split(',') ?? new string[0];
+    var imageList = Model.Property.Pimg?.Split(',') ?? new string[0];
+}
+@{
+    
+    var userid = int.Parse(Context.Session.GetString("UserID").ToString());
+    var time = DateTime.Now;
 }
 
 <!-- ##### Listings Content Area Start ##### -->
@@ -28,14 +35,14 @@
                 <div class="listings-content">
                     <!-- Price -->
                     <div class="list-price">
-                        <p>₹@Model.Price.ToString("N0")</p>
+                        <p>₹@Model.Property.Price.ToString("N0")</p>
                     </div>
-                    <h5>@Model.Title</h5>
+                    <h5>@Model.Property.Title</h5>
                     <p class="location">
                         <img src="~/Content/spthings/img/icons/location.png" alt="Location Icon" />
-                        @Model.Address, @Model.City, @Model.State - @Model.ZipCode
+                        @Model.Property.Address, @Model.Property.City, @Model.Property.State - @Model.Property.ZipCode
                     </p>
-                    <p>@Model.Description</p>
+                    <p>@Model.Property.Description</p>
 
                     <!-- Meta Info (Static for now; replace with dynamic if needed) -->
                     <div class="property-meta-data d-flex align-items-end mt-4">
@@ -78,11 +85,83 @@
                         
                     </div>
 
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+
+
+
+
+
+
+
+<div class="container my-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="fas fa-star-half-alt"></i> Submit Your Review</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+
+                <!-- Hidden Inputs -->
+                <input asp-for="Review.UserId" type="hidden" value="@userid" />
+                <input asp-for="Review.PropertyId" type="hidden" value="@Model.Property.PropertyId" />
+                <input asp-for="Review.ReviewDate" type="hidden" value="@time" />
+
+
+                <!-- Rating Dropdown -->
+                <div class="mb-3">
+                    <label asp-for="Review.Rating" class="form-label"><i class="fas fa-star"></i> Rating</label>
+                    <select asp-for="Review.Rating" class="form-select">
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                    </select>
+                    <span asp-validation-for="Review.Rating" class="text-danger"></span>
+
+                </div>
+
+                <!-- Review Text -->
+                <div class="mb-3">
+                    <label asp-for="Review.ReviewText" class="form-label"><i class="fas fa-comment-dots"></i> Your Review</label>
+                    <textarea asp-for="Review.ReviewText" class="form-control" rows="5" placeholder="Write your review here..."></textarea>
+                    <span asp-validation-for="Review.ReviewText" class="text-danger"></span>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Submit Review
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ##### Listings Content Area End ##### -->
 <!-- Optional: Include Owl Carousel JS if not already -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />

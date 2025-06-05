@@ -1,0 +1,70 @@
+﻿@model List<RealEstate.Models.Appointment>
+@{
+    ViewData["Title"] = "Property Appointments";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-primary mb-4">Appointments for Your Properties</h2>
+
+<table class="table table-bordered table-hover shadow-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>#</th>
+            <th>Buyer Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Property ID</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="9" class="text-center text-muted">No appointment requests found.</td>
+            </tr>
+        }
+        else
+        {
+            int count = 1;
+            foreach (var a in Model)
+            {
+                <tr>
+                    <td>@count++</td>
+                    <td>@(a.User != null ? $"{a.User.FirstName} {a.User.LastName}" : "N/A")</td>
+                    <td>@(a.BuyerEmail ?? a.User?.Email ?? "N/A")</td>
+                    <td>@(a.BuyerContactNumber ?? a.User?.PhoneNumber ?? "N/A")</td>
+                    <td>@a.PropertyId</td>
+                    <td>@a.AppointmentDate.ToShortDateString()</td>
+                    <td>@a.AppointmentDate.ToString("hh:mm tt")</td>
+                    <td>
+                        <span class="badge bg-@(a.Status == "Accepted" ? "success" : a.Status == "Rejected" ? "danger" : "secondary")">
+                            @a.Status
+                        </span>
+                    </td>
+                    <td>
+                        @if (a.Status == "Pending")
+                        {
+                            <form asp-action="AcceptAppointment" method="post" style="display:inline">
+                                <input type="hidden" name="appointmentId" value="@a.AppointmentId" />
+                                <button type="submit" class="btn btn-success btn-sm">Accept</button>
+                            </form>
+                            <form asp-action="RejectAppointment" method="post" style="display:inline">
+                                <input type="hidden" name="appointmentId" value="@a.AppointmentId" />
+                                <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <span class="text-muted">No Action</span>
+                        }
+                    </td>
+                </tr>
+
+            }
+        }
+    </tbody>
+</table>

@@ -1,15 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RealEstate.Data;
 using RealEstate.Models;
 using RealEstate.RepoDAL;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace RealEstate.Controllers
 {
     public class PropertyController : Controller
     {
         IPropertiesRepo pro;
-        public PropertyController(IPropertiesRepo pro)
+        public RealEstateContext db;
+
+        public PropertyController(IPropertiesRepo pro, RealEstateContext db)
         {
             this.pro = pro;
+            this.db=db;
         }
 
         public IActionResult Index()
@@ -94,24 +99,82 @@ namespace RealEstate.Controllers
 
 
 
-        public IActionResult usersidepage(int page = 1)
+        public IActionResult usersidepage(string keyword, string city, string propertyType, string status, int page = 1)
         {
             int pageSize = 9;
             int totalProperties;
-            var paginatedProperties = pro.GetPaginatedProperties(page, pageSize, out totalProperties);
+
+            var paginatedProperties = pro.GetPaginatedProperties(
+                page, pageSize, out totalProperties,
+                keyword, city, propertyType, status
+            );
 
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = (int)Math.Ceiling((double)totalProperties / pageSize);
+
+            // Preserve filters in ViewBag for pagination
+            ViewBag.Keyword = keyword;
+            ViewBag.City = city;
+            ViewBag.PropertyType = propertyType;
+            ViewBag.Status = status;
 
             return View(paginatedProperties);
         }
 
 
+        //public IActionResult singlepage(int id)
+        //{
+        //    var data = pro.GetPropertyById(id);
+
+
+        //    return View(data);
+        //}
+
         public IActionResult singlepage(int id)
         {
-            var data = pro.GetPropertyById(id);
-            return View(data);
+            var property = pro.GetPropertyById(id);
+
+            var vm = new PropertyReviewViewModel
+            {
+                Property = property,
+                Review = new Review()
+            };
+
+            return View(vm);
         }
+
+
+        //[HttpPost]
+        //public IActionResult singlepage(Property p)
+        //{
+        //    var data = new Review
+        //    {
+        //        PropertyId=p.PropertyId,
+        //        UserId=p.UserId,
+        //        Rating=p.review.Rating,
+        //        ReviewText=p.review.ReviewText,
+        //        ReviewDate=p.review.ReviewDate
+        //    };
+
+        //    db.Reviews.Add(data);
+        //    db.SaveChanges();
+
+        //    return RedirectToAction("singlepage");
+        //}
+
+        [HttpPost]
+        public IActionResult singlepage(PropertyReviewViewModel vm)
+        {
+            db.Reviews.Add(vm.Review);
+            db.SaveChanges();
+
+            return RedirectToAction("singlepage", new { id = vm.Review.PropertyId });
+        }
+
+
+
+
+
 
         public IActionResult singlepageformain(int id)
         {

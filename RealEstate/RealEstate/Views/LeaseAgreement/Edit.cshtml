@@ -1,0 +1,62 @@
+﻿@model RealEstate.Models.LeaseAgreement
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Edit Lease";
+}
+
+<div class="container py-4">
+    <h3 class="mb-4">✏️ Edit Lease Agreement</h3>
+
+    <form asp-action="Edit" asp-controller="LeaseAgreement" method="post" class="row g-4">
+        <input type="hidden" asp-for="LeaseId" />
+
+        <div class="col-md-6">
+            <label asp-for="PropertyId" class="form-label">🏘️ Property</label>
+            <select asp-for="PropertyId" class="form-select" asp-items="ViewBag.Properties">
+                <option value="">-- Select Property --</option>
+            </select>
+            <span asp-validation-for="PropertyId" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="TenantId" class="form-label">👤 Tenant</label>
+            <select asp-for="TenantId" class="form-select" asp-items="ViewBag.Tenants">
+                <option value="">-- Select Tenant --</option>
+            </select>
+            <span asp-validation-for="TenantId" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="LeaseStartDate" class="form-label">📅 Start Date</label>
+            <input asp-for="LeaseStartDate" type="date" class="form-control" />
+            <span asp-validation-for="LeaseStartDate" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="LeaseEndDate" class="form-label">📅 End Date</label>
+            <input asp-for="LeaseEndDate" type="date" class="form-control" />
+            <span asp-validation-for="LeaseEndDate" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="RentAmount" class="form-label">💵 Rent</label>
+            <input asp-for="RentAmount" class="form-control" />
+            <span asp-validation-for="RentAmount" class="text-danger small"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="SecurityDeposit" class="form-label">💰 Security</label>
+            <input asp-for="SecurityDeposit" class="form-control" />
+            <span asp-validation-for="SecurityDeposit" class="text-danger small"></span>
+        </div>
+
+        <div class="col-12 d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary px-4">✏️ Update Lease</button>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

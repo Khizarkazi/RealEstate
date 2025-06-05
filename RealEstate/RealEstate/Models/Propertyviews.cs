@@ -1,17 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Models
 {
     public class Propertyviews
     {
-
-
-
         [Key]
         public int PropertyId { get; set; }
 
-        public List<IFormFile> Pimg { get; set; }
+        public List<IFormFile> Pimg { get; set; } = new List<IFormFile>();
 
         [Required, MaxLength(255)]
         public string Title { get; set; }
@@ -47,8 +47,5 @@ namespace RealEstate.Models
         public ICollection<Appointment>? Appointments { get; set; }
         public ICollection<Review>? Reviews { get; set; }
         public ICollection<LeaseAgreement>? LeaseAgreements { get; set; }
-
-
-
     }
 }

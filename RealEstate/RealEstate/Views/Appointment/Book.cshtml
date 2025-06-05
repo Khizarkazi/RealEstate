@@ -1,0 +1,38 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Book Appointment";
+}
+
+<h2>Book Appointment</h2>
+
+<form method="post" asp-action="Book" asp-controller="Appointment">
+    <input type="hidden" name="PropertyId" value="@ViewBag.PropertyId" />
+
+    <div class="form-group">
+        <label for="BuyerEmail">Email address</label>
+        <input type="email" class="form-control" id="BuyerEmail" name="BuyerEmail" placeholder="Enter email" required />
+    </div>
+
+    <div class="form-group">
+        <label for="BuyerContactNumber">Contact Number</label>
+        <input type="text" class="form-control" id="BuyerContactNumber" name="BuyerContactNumber" placeholder="Enter contact number" required />
+    </div>
+
+    <div class="form-group">
+        <label>Preferred Time Slots</label><br />
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Morning" id="slotMorning" />
+            <label class="form-check-label" for="slotMorning">Morning</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Afternoon" id="slotAfternoon" />
+            <label class="form-check-label" for="slotAfternoon">Afternoon</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Evening" id="slotEvening" />
+            <label class="form-check-label" for="slotEvening">Evening</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Appointment</button>
+</form>

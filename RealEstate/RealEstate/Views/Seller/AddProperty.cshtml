@@ -1,0 +1,88 @@
+﻿@model RealEstate.Models.Propertyviews
+
+@{
+    ViewData["Title"] = "Add Property";
+}
+
+<h2>Add Property</h2>
+
+<form asp-action="AddProperty" asp-controller="Seller" method="post" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label"></label>
+        <input asp-for="Price" class="form-control" type="number" />
+        <span asp-validation-for="Price" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="State" class="form-label"></label>
+        <input asp-for="State" class="form-control" />
+        <span asp-validation-for="State" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ZipCode" class="form-label"></label>
+        <input asp-for="ZipCode" class="form-control" />
+        <span asp-validation-for="ZipCode" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="PropertyType" class="form-label"></label>
+        <select asp-for="PropertyType" class="form-select">
+            <option value="">-- Select Property Type --</option>
+            <option value="Home">Home</option>
+            <option value="Apartment">Apartment</option>
+            <option value="Office">Office</option>
+            <option value="Shop">Shop</option>
+            <option value="Land">Land</option>
+        </select>
+        <span asp-validation-for="PropertyType" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Available">Available</option>
+            <option value="Sold">Sold</option>
+            <option value="Pending">Pending</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Pimg" class="form-label">Property Images</label>
+        <input asp-for="Pimg" type="file" multiple class="form-control" />
+        <span asp-validation-for="Pimg" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Property</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
