@@ -3,8 +3,85 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+<section class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h2 class="fw-bold">👤 Tenant Dashboard</h2>
+            <p class="text-muted">Welcome back! Manage your lease, payments, and profile all in one place.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+
+        <!-- Lease Agreements -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-white"
+                 onmouseover="this.classList.add('shadow-lg')"
+                 onmouseout="this.classList.remove('shadow-lg')">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3 fs-1">📄</div>
+                    <h5 class="card-title fw-bold">Active Lease Agreements</h5>
+                    <p class="card-text text-muted">View your current rental agreements and terms.</p>
+                    <a asp-controller="LeaseAgreement" asp-action="MyLeases" class="btn btn-primary mt-auto">View</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rent History -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-white"
+                 onmouseover="this.classList.add('shadow-lg')"
+                 onmouseout="this.classList.remove('shadow-lg')">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3 fs-1">💳</div>
+                    <h5 class="card-title fw-bold">Rent Payment History</h5>
+                    <p class="card-text text-muted">Check your past rent payments and status.</p>
+                    <a asp-controller="Transaction" asp-action="History" class="btn btn-success mt-auto">Track</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rent Due Notifications -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-white"
+                 onmouseover="this.classList.add('shadow-lg')"
+                 onmouseout="this.classList.remove('shadow-lg')">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3 fs-1">📢</div>
+                    <h5 class="card-title fw-bold">Rent Due Notifications</h5>
+                    <p class="card-text text-muted">Get alerts for upcoming rent deadlines.</p>
+                    <a asp-controller="Tenant" asp-action="RentNotifications" class="btn btn-warning mt-auto text-white">Alerts</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Report Issues -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-white"
+                 onmouseover="this.classList.add('shadow-lg')"
+                 onmouseout="this.classList.remove('shadow-lg')">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3 fs-1">🛠️</div>
+                    <h5 class="card-title fw-bold">Report Issues</h5>
+                    <p class="card-text text-muted">Report property-related problems to your manager.</p>
+                    <a asp-controller="Tenant" asp-action="ReportIssue" class="btn btn-danger mt-auto">Report</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Profile -->
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm bg-white"
+                 onmouseover="this.classList.add('shadow-lg')"
+                 onmouseout="this.classList.remove('shadow-lg')">
+                <div class="card-body d-flex flex-column">
+                    <div class="mb-3 fs-1">👤</div>
+                    <h5 class="card-title fw-bold">Edit Profile</h5>
+                    <p class="card-text text-muted">Manage your personal details and settings.</p>
+                    <a asp-controller="Account" asp-action="EditProfile" class="btn btn-dark mt-auto">Edit</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>

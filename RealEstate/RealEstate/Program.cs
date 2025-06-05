@@ -18,6 +18,7 @@ builder.Services.AddDbContext<RealEstateContext>
     );
 
 builder.Services.AddScoped<IPropertiesRepo, PropertyServices>();
+builder.Services.AddScoped<ILeaseAgreementRepo,LeaseAgreementServices>();
 
 // ✅ Register session services
 builder.Services.AddDistributedMemoryCache(); // Required

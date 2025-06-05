@@ -1,0 +1,34 @@
+﻿@model IEnumerable<RealEstate.Models.LeaseAgreement>
+@{
+    ViewData["Title"] = "📢 Rent Due Alerts";
+    Layout = "_Layout";
+}
+
+<div class="container py-5">
+    <h3 class="mb-4">📢 Rent Due Alerts</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-success text-center">
+            🎉 You have no rent due today!
+        </div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            @foreach (var lease in Model)
+            {
+                <div class="col">
+                    <div class="card shadow-sm border-danger border-1">
+                        <div class="card-body">
+                            <h5 class="card-title text-danger">🏠 @lease.Property?.Title</h5>
+                            <p class="mb-1"><strong>💵 Rent Due:</strong> ₹@lease.RentAmount.ToString("N0")</p>
+                            <p class="mb-1"><strong>📅 Lease Period:</strong> @lease.LeaseStartDate.ToShortDateString() – @lease.LeaseEndDate.ToShortDateString()</p>
+                            <p class="mb-0 text-danger fw-semibold">🚨 Rent is due today!</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
