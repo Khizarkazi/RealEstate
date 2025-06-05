@@ -13,8 +13,7 @@ namespace RealEstate.Controllers
             _context = context;
         }
 
-<<<<<<< Updated upstream
-=======
+
         //public IActionResult SalesChart()
         //{
         //    var salesData = _context.Sales
@@ -34,7 +33,7 @@ namespace RealEstate.Controllers
         //    return View();
         //}
 
->>>>>>> Stashed changes
+
         public IActionResult SalesChart(string filter = "monthly")
         {
             // Prepare filter dropdown
