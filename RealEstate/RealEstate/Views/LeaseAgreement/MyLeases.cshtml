@@ -1,0 +1,46 @@
+﻿@model IEnumerable<RealEstate.Models.LeaseAgreement>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Leases";
+}
+
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="fw-bold">📜 My Lease Agreements</h3>
+        </div>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">You currently have no lease agreements.</div>
+    }
+    else
+    {
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var lease in Model)
+            {
+                <div class="col">
+                    <div class="card border-0 shadow h-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-primary fw-semibold">🏠 @lease.Property?.Title</h5>
+                            <p class="card-text mb-1">
+                                <strong>📅 Period:</strong> @lease.LeaseStartDate:dd MMM yyyy – @lease.LeaseEndDate:dd MMM yyyy
+                            </p>
+                            <p class="card-text mb-1">
+                                <strong>💵 Rent:</strong> ₹@lease.RentAmount.ToString("N0")
+                            </p>
+                            <p class="card-text">
+                                <strong>💰 Security:</strong> ₹@lease.SecurityDeposit.ToString("N0")
+                            </p>
+                        </div>
+                        <div class="card-footer bg-transparent border-0 text-end">
+                            <span class="badge bg-success">✔️ Active</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

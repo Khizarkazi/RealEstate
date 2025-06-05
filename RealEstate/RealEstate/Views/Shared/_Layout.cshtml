@@ -19,6 +19,9 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/AddProperties.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+
 
 
     <!-- Favicon  -->
@@ -137,7 +140,12 @@
                                         <li><a asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
                                         <li><a asp-controller="Property" asp-action="Index">View Property</a></li>
                                         <li><a asp-controller="Property" asp-action="AddProperty">Add Property</a></li>
-                                         <li><a asp-controller="Sales" asp-action="SalesChart">Add Property</a></li>
+
+                                         <li><a asp-controller="Sales" asp-action="SalesChart">Sales Chart</a></li>
+
+                                         <li><a asp-controller="LeaseAgreement" asp-action="AddLease">Add Lease</a></li>
+                                          <li><a asp-controller="LeaseAgreement" asp-action="Index">view Lease</a></li>
+
                                         
                                     }
                                     else if (userRole == "Agent")

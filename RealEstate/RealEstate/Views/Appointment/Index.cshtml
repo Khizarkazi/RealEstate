@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Appointments Dashboard";
+    Layout = "_Layout";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+            <h4>Appointments Dashboard</h4>
+        </div>
+        <div class="card-body">
+            <p>Welcome to the appointments module. Use the menu to navigate and manage appointments effectively.</p>
+            <a href="@Url.Action("AddAppointment")" class="btn btn-primary">Book New Appointment</a>
+            <a href="@Url.Action("Fetch")" class="btn btn-success">View All Appointments</a>
+            <a href="@Url.Action("UpdateRemark")" class="btn btn-info">Update Remarks</a>
+        </div>
+    </div>
+</div>

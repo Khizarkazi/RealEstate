@@ -1,0 +1,71 @@
+﻿@model IEnumerable<RealEstate.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Update Remarks";
+}
+
+<h2 class="my-4 text-center text-primary">
+    <i class="fas fa-edit"></i> Update Appointment Remarks
+</h2>
+
+<div class="card shadow-lg">
+    <div class="card-body">
+        <table class="table table-hover table-striped align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Property</th>
+                    <th>Buyer Email</th>
+                    <th>Contact</th>
+                    <th>Preferred Slots</th>
+                    <th>Status</th>
+                    <th>Agent Remark</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <form asp-action="UpdateRemark" method="post">
+                        <td class="fw-semibold">@item.Property?.Title</td>
+                        <td>@item.BuyerEmail</td>
+                        <td>@item.BuyerContactNumber</td>
+                        <td>@item.PreferredSlots</td>
+                        <td>
+                            <span class="badge @GetStatusBadge(item.Status)">
+                                    @item.Status
+                            </span>
+                        </td>
+                        <td>
+                            <input type="hidden" name="id" value="@item.AppointmentId" />
+                            <select name="remark" class="form-select form-select-sm">
+                                <option value="Accepted" selected="@(item.AgentRemark == "Accepted")">Accepted</option>
+                                <option value="Rejected" selected="@(item.AgentRemark == "Rejected")">Rejected</option>
+                                <option value="Pending" selected="@(item.AgentRemark == "Pending")">Pending</option>
+                            </select>
+                        </td>
+                        <td>
+                            <button type="submit" class="btn btn-success btn-sm">
+                                <i class="fas fa-save"></i> Update
+                            </button>
+                        </td>
+                        </form>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@functions {
+    private string GetStatusBadge(string status)
+    {
+        return status switch
+        {
+            "Pending" => "bg-warning text-dark",
+            "Confirmed" => "bg-success",
+            "Cancelled" => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+}

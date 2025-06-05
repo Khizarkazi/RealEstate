@@ -1,0 +1,74 @@
+﻿@model IEnumerable<RealEstate.Models.Appointment>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Appointments";
+}
+
+<h2>My Appointments</h2>
+
+@if (!Model.Any())
+{
+    <p>No appointments found.</p>
+}
+else
+{
+    <div class="row">
+        @foreach (var appointment in Model)
+        {
+            <div class="card col-md-4 m-2 p-3">
+                <h4>Property ID: @appointment.PropertyId</h4>
+                <p><strong>Appointment Date:</strong> @appointment.AppointmentDate.ToString("dd MMM yyyy")</p>
+                <p><strong>Status:</strong> @appointment.Status</p>
+                <p><strong>Preferred Slots:</strong> @appointment.PreferredSlots</p>
+                <p><strong>Agent Remark:</strong> @(string.IsNullOrEmpty(appointment.AgentRemark) ? "No remarks yet" : appointment.AgentRemark)</p>
+            </div>
+        }
+    </div>
+}
+
+
+
+
+
+
+
+@* @{
+    Layout = "_Layout";
+    ViewData["Title"] = "Dashboard";
+}
+
+<form method="post" asp-controller="Appointment" asp-action="Book">
+    <!-- Hardcoded property ID for now -->
+    <input type="hidden" name="PropertyId" value="1" />
+
+    <div class="form-group">
+        <label for="buyerEmail">Email address</label>
+        <input type="email" class="form-control" id="buyerEmail" name="BuyerEmail" placeholder="Enter email" required />
+        <small class="form-text text-muted">We'll never share your email with anyone else.</small>
+    </div>
+
+    <div class="form-group">
+        <label for="buyerContact">Contact Number</label>
+        <input type="text" class="form-control" id="buyerContact" name="BuyerContact" placeholder="Enter contact number" required />
+    </div>
+
+    <div class="form-group">
+        <label>Preferred Time Slots</label><br />
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Morning" id="slotMorning" />
+            <label class="form-check-label" for="slotMorning">Morning</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Afternoon" id="slotAfternoon" />
+            <label class="form-check-label" for="slotAfternoon">Afternoon</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="SelectedSlots" value="Evening" id="slotEvening" />
+            <label class="form-check-label" for="slotEvening">Evening</label>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit Appointment</button>
+</form>
+ *@

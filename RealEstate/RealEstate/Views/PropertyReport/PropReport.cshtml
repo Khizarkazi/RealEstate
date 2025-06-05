@@ -1,0 +1,27 @@
+﻿@model PropertyReportView
+
+<h2>Property Listings Report</h2>
+
+<h4>Status</h4>
+<table class="table">
+    @foreach (var item in Model.StatusCounts)
+    {
+        <tr>
+            <td>@item.Key</td>
+            <td>@item.Value</td>
+        </tr>
+    }
+</table>
+
+<h4>Type</h4>
+
+<h4>By City</h4>
+<table class="table">
+    @foreach (var item in Model.CityCounts)
+    {
+        <tr>
+            <td>@item.Key</td>
+            <td>@item.Value</td>
+        </tr>
+    }
+</table>
