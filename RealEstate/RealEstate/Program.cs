@@ -23,8 +23,12 @@ builder.Services.AddScoped<IUserCountRepo, UserCountService>();
 builder.Services.AddScoped<IPropertyRepo, PropertyReportService>();
 
 builder.Services.AddScoped<ILeaseAgreementRepo,LeaseAgreementServices>();
+<<<<<<< Updated upstream
 
 
+=======
+builder.Services.AddScoped<ITransactionRepo,TransactionService >();
+>>>>>>> Stashed changes
 // ✅ Register session services
 builder.Services.AddDistributedMemoryCache(); // Required
 builder.Services.AddSession(); // Required
