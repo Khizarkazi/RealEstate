@@ -38,13 +38,13 @@ namespace RealEstate.Services
 
                 mpath.Add(filepath); // Collect image path
             }
-<<<<<<< Updated upstream
+
                                                                                       
-            var prod = new Models.Property()
-=======
+            
+
 
             var prod = new Property()
->>>>>>> Stashed changes
+
             {
                 Title = view.Title,
                 Description = view.Description,
@@ -173,7 +173,7 @@ namespace RealEstate.Services
             }
         }
 
-<<<<<<< Updated upstream
+
 
 
 
@@ -187,9 +187,9 @@ namespace RealEstate.Services
         public List<Models.Property> GetPaginatedProperties(
     int page, int pageSize, out int totalProperties,
     string keyword = null, string city = null, string propertyType = null, string status = null)
-=======
-        public List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
->>>>>>> Stashed changes
+
+        //public List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties)
+
         {
             var query = db.Properties.AsQueryable();
 
@@ -229,9 +229,7 @@ namespace RealEstate.Services
             }
         }
 
-<<<<<<< Updated upstream
 
-=======
         public async Task UploadFileAsync(IFormFile file, string fpath)
         {
             string? directory = Path.GetDirectoryName(fpath);
@@ -308,6 +306,6 @@ namespace RealEstate.Services
                      .OrderByDescending(a => a.AppointmentDate)
                      .ToList();
         }
->>>>>>> Stashed changes
+
     }
 }
