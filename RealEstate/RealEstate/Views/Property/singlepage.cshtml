@@ -16,10 +16,16 @@
 }
 
 <!-- ##### Listings Content Area Start ##### -->
+<form asp-controller="Property" asp-action="Booking" method="post">
 <section class="listings-content-wrapper section-padding-100">
     <div class="container">
         <div class="row">
             <div class="col-12">
+
+                    <input asp-for="Review.UserId" type="hidden" value="@userid" />
+                    <input asp-for="Review.PropertyId" type="hidden" value="@Model.Property.PropertyId" />
+                    <input asp-for="Review.ReviewDate" type="hidden" value="@time" />
+
                 <!-- Property Image Carousel -->
                 <div class="single-listings-sliders owl-carousel">
                     @foreach (var img in imageList)
@@ -79,7 +85,8 @@
                     <!-- Action Buttons -->
                     <div class="listings-btn-groups mt-4">
                         
-                            <a href="#" class="btn south-btn active">Buy</a>
+                            @* <a asp-controller="Property" asp-action="Booking" class="btn south-btn active">Book</a> *@
+                            <button type="submit" class="btn south-btn active" >Book</button>
                         
                             <a href="#" class="btn south-btn active">Rent</a>
                         
@@ -97,7 +104,7 @@
 </section>
 
 
-
+</form>
 
 
 

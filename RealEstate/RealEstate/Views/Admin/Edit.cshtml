@@ -1,0 +1,47 @@
+﻿@model Booking
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "_Layout";
+    //var userid = int.Parse(Context.Session.GetString("UserID").ToString());
+   // var time = DateTime.Now;
+}
+@{
+}
+
+
+<h2>Edit Booking</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="BookingId" />
+
+    <div class="mb-3">
+        <label asp-for="PropertyId" class="form-label"></label>
+        <input asp-for="PropertyId" class="form-control" />  <!-- Editable or hidden + visible label -->
+        <span asp-validation-for="PropertyId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="UserId" class="form-label"></label>
+        <input asp-for="UserId" class="form-control" />
+        <span asp-validation-for="UserId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="BookingDate" class="form-label"></label>
+        <input asp-for="BookingDate" class="form-control" type="datetime-local" />
+        <span asp-validation-for="BookingDate" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Status" class="form-label"></label>
+        <select asp-for="Status" class="form-select">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

@@ -183,6 +183,40 @@ namespace RealEstate.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult Booking(PropertyReviewViewModel vs)
+        {
+             pro.booking(vs);
+            TempData["msg"] = "Booking Done Succesfully";
+            return RedirectToAction("fetcchbookingbyid");
+
+            // Return to the same singlepage
+            //return RedirectToAction("singlepage", new { id = vs.Review.PropertyId });
+        }
+
+        [HttpGet]
+        public IActionResult bookingpage()
+        {
+            var data = pro.fetchbooking();            
+            return View(data);
+        }
+
+        [HttpGet]
+        public IActionResult fetcchbookingbyid(int userid)
+        {
+            userid = int.Parse(HttpContext.Session.GetString("UserID").ToString());
+            var data = pro.fetcchbookingbyid(userid);            
+            return View(data);
+        }
+
+
+        public IActionResult DeleteBookinguser(int id)
+        {
+            pro.deletebooking(id);
+            TempData["delete"] = "Booking Deleted Succesfully";
+            return RedirectToAction("fetcchbookingbyid");
+        }
+
 
 
     }

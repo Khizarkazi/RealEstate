@@ -1,0 +1,68 @@
+﻿@model List<Booking>
+@{
+    Layout = "_Layout";
+
+}
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<partial name="Notification"></partial>
+
+<form method="post">
+    <div class="container mt-5">
+        <h2 class="mb-4">All Bookings</h2>
+        <table class="table table-bordered table-striped align-middle text-center" id="mytable">
+            <thead class="table-dark">
+                <tr>
+                    <th>Booking ID</th>
+                    <th>PropertyId</th>
+                    <th>UserId</th>
+                    <th>BookingDate</th>
+                    <th>Status</th>
+
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.BookingId</td>
+                        <td>@item.PropertyId</td>
+                        <td>@item.UserId</td>
+                        <td>@item.BookingDate</td>
+                        <td>@item.Status</td>
+                        <td>
+
+                            @if (item.Status == "Active")
+                            {
+                                <a asp-action="buy" asp-route-id="@item.BookingId" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure?')">Buy</a>
+                            }
+
+
+                            <a asp-action="DeleteBookinguser" asp-route-id="@item.BookingId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</form>
+
+
+
+@section Scripts {
+    <link href="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/v/dt/dt-1.13.4/datatables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#mytable').DataTable();
+        });
+    </script>
+}
+

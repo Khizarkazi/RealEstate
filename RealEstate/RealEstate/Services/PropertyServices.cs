@@ -1,13 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using RealEstate.Data;
 using RealEstate.Models;
 using RealEstate.RepoDAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 
 namespace RealEstate.Services
 {
@@ -246,6 +247,84 @@ namespace RealEstate.Services
                 }
             }
         }
+
+
+
+       public void booking(PropertyReviewViewModel vs)
+        {
+            
+            var data = new Booking
+            {
+                PropertyId = vs.Review.PropertyId,
+                UserId=vs.Review.UserId,
+                BookingDate=vs.Review.ReviewDate,
+                Status="Inactive",
+
+
+            };
+
+            db.Bookings.Add(data);
+            db.SaveChanges();
+        }
+
+
+
+       public List<Booking> fetchbooking()
+        {
+            return db.Bookings.ToList();
+        }
+
+
+
+        public List<Booking> fetcchbookingbyid(int userid)
+        {
+            return db.Bookings.Where(x => x.UserId==userid).ToList();
+        }
+
+
+       public void deletebooking(int id)
+        {
+            var dd = db.Bookings.Find(id);
+            if (dd != null)
+            {
+                db.Bookings.Remove(dd);
+                db.SaveChanges();
+            }
+        }
+
+
+
+        public Booking getbookingid(int id)
+        {
+            var data= db.Bookings.Find(id);
+            return data;
+        }
+
+
+        public void updatebooking(Booking id)
+        {
+            var data = db.Bookings.Find(id.BookingId);
+
+            //if (data == null) return;
+
+            data.PropertyId = id.PropertyId;
+            data.Status = id.Status;
+            data.UserId=id.UserId;
+            data.BookingDate=id.BookingDate;
+            
+
+            db.Bookings.Update(data);
+            db.SaveChanges();
+        }
+
+
+
+
+
+
+
+
+
 
         // ========== Appointment Methods ==========
 

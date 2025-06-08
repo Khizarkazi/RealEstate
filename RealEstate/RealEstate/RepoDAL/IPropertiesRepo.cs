@@ -24,6 +24,25 @@ namespace RealEstate.RepoDAL
    string keyword = null, string city = null, string propertyType = null, string status = null);
 
 
+
+
+
+
+
+
+        void booking(PropertyReviewViewModel vs);
+
+        List<Booking> fetchbooking();
+        List<Booking> fetcchbookingbyid(int userid);
+
+        void deletebooking(int id);
+
+
+        Booking getbookingid(int id);
+
+        void updatebooking(Booking id);
+
+
         
 
 
