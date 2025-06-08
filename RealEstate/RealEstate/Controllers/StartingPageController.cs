@@ -201,8 +201,60 @@ namespace RealEstate.Controllers
              
             return RedirectToAction("Login", "StartingPage");
         }
+        public IActionResult EditProfile()
+        {
+            var userId = HttpContext.Session.GetString("UserID");
+            var user = db.Users.FirstOrDefault(u => u.UserId.ToString() == userId);
+            if (user == null) return NotFound();
 
+            var model = new ProfilePicView
+            {
+                UserId = user.UserId,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                PasswordHash=user.PasswordHash,
+                Role = user.Role
+            };
 
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult EditProfile(ProfilePicView model)
+        {
+            if (!ModelState.IsValid) return View(model);
+            string path = env.WebRootPath;//fetch www.root folder location
+            string filepath = "Content/Images/" + model.ProfilePicture.FileName;//path of your file
+            string fullpath = Path.Combine(path, filepath);
+
+            var user = db.Users.FirstOrDefault(u => u.UserId == model.UserId);
+            if (user == null) return NotFound();
+
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            user.PasswordHash = model.PasswordHash;
+            user.Role = model.Role;
+
+            if (model.ProfilePicture != null)
+            {
+                var fileName = Path.GetFileName(model.ProfilePicture.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    model.ProfilePicture.CopyTo(stream);
+                }
+
+                user.ProfilePicture = filepath;
+            }
+
+            db.SaveChanges();
+            TempData["Success"] = "Profile updated successfully!";
+            return RedirectToAction("Dashboard","Tenant");
+        }
 
 
     }

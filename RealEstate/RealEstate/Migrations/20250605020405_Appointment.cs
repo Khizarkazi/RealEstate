@@ -10,17 +10,17 @@ namespace RealEstate.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Bath",
-                table: "Properties");
+            //migrationBuilder.DropColumn(
+            //    name: "Bath",
+            //    table: "Properties");
 
-            migrationBuilder.DropColumn(
-                name: "Garage",
-                table: "Properties");
+            //migrationBuilder.DropColumn(
+            //    name: "Garage",
+            //    table: "Properties");
 
-            migrationBuilder.DropColumn(
-                name: "squarefeet",
-                table: "Properties");
+            //migrationBuilder.DropColumn(
+            //    name: "squarefeet",
+            //    table: "Properties");
 
             migrationBuilder.AlterColumn<string>(
                 name: "Status",
