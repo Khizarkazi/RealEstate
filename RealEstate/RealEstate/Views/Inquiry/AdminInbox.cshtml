@@ -1,0 +1,54 @@
+﻿@model IEnumerable<RealEstate.Models.Inquiry>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "User Inquiries";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center text-primary fw-bold">📥 All User Inquiries</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">There are no inquiries to show.</div>
+    }
+    else
+    {
+        <div class="row g-4">
+            @foreach (var i in Model)
+            {
+                <div class="col-12">
+                    <div class="border rounded shadow-sm p-4 bg-light">
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label fw-semibold">👤 User:</label>
+                            <div class="col-sm-10">
+                                <input type="text" readonly class="form-control-plaintext" value="@i.User?.Email" />
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label fw-semibold">📨 Message:</label>
+                            <div class="col-sm-10">
+                                <textarea readonly class="form-control" rows="2">@i.Message</textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label class="col-sm-2 col-form-label fw-semibold">📌 Status:</label>
+                            <div class="col-sm-4">
+                                <span class="badge @(i.Status == "Replied" ? "bg-success" : "bg-warning text-dark")">
+                                    @i.Status
+                                </span>
+                            </div>
+                            <div class="col-sm-6 text-end">
+                                <a asp-action="Respond" asp-route-id="@i.InquiryId" class="btn btn-outline-primary btn-sm">
+                                    ✉️ Respond
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

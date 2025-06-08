@@ -91,7 +91,7 @@ namespace RealEstate.Controllers
             if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int tenantId))
             {
                 TempData["Error"] = "Please login first.";
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("RentAlerts");
             }
 
             var dueLeases = _leaseAgreement.GetDueThisMonth(tenantId);

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<RealEstate.Models.Inquiry>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "My Inquiries";
+}
+
+<div class="container py-5">
+    <h2 class="text-center fw-bold text-primary mb-4">📩 My Inquiries</h2>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-warning text-center">
+            You have not submitted any inquiries yet.
+        </div>
+    }
+    else
+    {
+        <form class="row g-4">
+            @foreach (var i in Model)
+            {
+                <div class="col-12 border rounded shadow-sm p-4 bg-light">
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label fw-semibold">Message:</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext" value="@i.Message" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label fw-semibold">Status:</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext"
+                                   value="@i.Status" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label fw-semibold">Response:</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" rows="2" readonly>@i.Response</textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <label class="col-sm-2 col-form-label fw-semibold">Created:</label>
+                        <div class="col-sm-10">
+                            <input type="text" readonly class="form-control-plaintext"
+                                   value="@i.CreatedAt.ToString("dd MMM yyyy")" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </form>
+    }
+</div>

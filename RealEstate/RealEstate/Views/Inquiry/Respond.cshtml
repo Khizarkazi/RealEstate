@@ -1,0 +1,52 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Respond to Inquiry";
+}
+
+@model RealEstate.Models.Inquiry
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">✉️ Respond to User Inquiry</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Respond" method="post">
+                        <input type="hidden" name="id" value="@Model.InquiryId" />
+
+                        <!-- Inquiry Message (Read-Only) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Inquiry Message</label>
+                            <div class="form-control-plaintext border bg-light p-3 rounded">
+                                @Model.Message
+                            </div>
+                        </div>
+
+                        <!-- Response TextArea -->
+                        <div class="mb-4">
+                            <label for="response" class="form-label fw-semibold">Your Response <span class="text-danger">*</span></label>
+                            <textarea name="response"
+                                      id="response"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Write your reply here..."
+                                      required>@Model.Response</textarea>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-success px-4">
+                                📬 Submit Response
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="text-muted small text-center mt-3">
+                Please ensure your response is clear and professional.
+            </div>
+        </div>
+    </div>
+</div>
