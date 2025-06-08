@@ -1,0 +1,38 @@
+﻿@{
+    ViewBag.Title = "Buy Property";
+    int bookingId = ViewBag.BookingId;
+    double amount = ViewBag.Amount;
+}
+
+<h2>Redirecting to Payment...</h2>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    var options = {
+        "key": "rzp_test_Kl7588Yie2yJTV",
+        "amount": "@(amount * 100)", // Razorpay needs amount in paisa
+        "currency": "INR",
+        "name": "Masstech Business Solutions Pvt.Ltd",
+        "description": "Property Booking",
+        "handler": function (response) {
+            // Call your server to save transaction
+            window.location.href = "/Property/PaymentSuccess?paymentId=" + response.razorpay_payment_id + "&bookingId=" + @bookingId;
+        },
+        "prefill": {
+            "name": "Krish Kheloji",
+            "email": "khelojikrish@gmail.com",
+            "contact": "7208921898"
+        },
+        "theme": {
+            "color": "#F37254"
+        }
+    };
+    var rzp1 = new Razorpay(options);
+    rzp1.open();
+</script>
+
+
+
+
+
+            

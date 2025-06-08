@@ -38,7 +38,7 @@
                         <td>@item.Status</td>
                         <td>
 
-                            @if (item.Status == "Active")
+                            @if (item.Status == "Inactive")
                             {
                                 <a asp-action="buy" asp-route-id="@item.BookingId" class="btn btn-primary btn-sm" onclick="return confirm('Are you sure?')">Buy</a>
                             }

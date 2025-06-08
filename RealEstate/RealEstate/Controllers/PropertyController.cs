@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor;
 using RealEstate.Data;
 using RealEstate.Models;
 using RealEstate.RepoDAL;
@@ -216,6 +217,102 @@ namespace RealEstate.Controllers
             TempData["delete"] = "Booking Deleted Succesfully";
             return RedirectToAction("fetcchbookingbyid");
         }
+
+
+
+        //public IActionResult buy(int id)
+        //{
+        //    var data=db.Bookings.Find(id);
+
+        //    var amt = db.Properties.Where(x => x.PropertyId == data.PropertyId).Select(x => x.Price).FirstOrDefault();
+
+        //    var tran = new Transaction()
+        //    {
+        //        BookingId = data.BookingId,
+        //        Amount =amt,
+        //        PaymentMethod="Online",
+        //        PaymentStatus="Success",
+        //        TransactionDate=DateTime.Now
+        //    };
+
+        //    db.Transactions.Add(tran);
+        //    db.SaveChanges();
+
+        //    var dd= db.Bookings.Find(id);
+        //    db.Bookings.Remove(dd);
+        //    db.SaveChanges();
+
+        //    return View(amt);
+        //}
+
+        public IActionResult Buy(int id)
+        {
+            var data = db.Bookings.Find(id);
+            var amount = double.Parse(db.Properties
+                           .Where(x => x.PropertyId == data.PropertyId)
+                           .Select(x => x.Price)
+                           .FirstOrDefault().ToString());
+
+            ViewBag.BookingId = id;
+            ViewBag.Amount = amount;
+
+            return View();
+        }
+
+
+        //public IActionResult Buy(int id)
+        //{
+        //    var data = db.Bookings.Find(id);
+        //    var amount = db.Properties
+        //                   .Where(x => x.PropertyId == data.PropertyId)
+        //                   .Select(x => x.Price)
+        //                   .FirstOrDefault();
+
+        //    RazorpayClient client = new RazorpayClient("rzp_test_Kl7588Yie2yJTV", "6dN9Nqs7M6HPFMlL45AhaTgp");
+
+        //    Dictionary<string, object> options = new Dictionary<string, object>();
+        //    options.Add("amount", amount * 100);
+        //    options.Add("currency", "INR");
+        //    options.Add("receipt", "order_rcptid_11");
+        //    options.Add("payment_capture", 1);
+
+        //    Razorpay.Api.Order order = client.Order.Create(options);
+        //    ViewBag.OrderId = order["id"].ToString();
+        //    ViewBag.Amount = amount;
+        //    ViewBag.BookingId = id;
+
+        //    return View();
+        //}
+
+
+
+        public IActionResult PaymentSuccess(string paymentId, int bookingId)
+        {
+            var data = db.Bookings.Find(bookingId);
+            var amount = db.Properties
+                           .Where(x => x.PropertyId == data.PropertyId)
+                           .Select(x => x.Price)
+                           .FirstOrDefault();
+
+            var tran = new Transaction()
+            {
+                BookingId = data.BookingId,
+                Amount = amount,
+                PaymentMethod = "Online",
+                PaymentStatus = "Success",
+                TransactionDate = DateTime.Now,
+               
+            };
+
+            db.Transactions.Add(tran);
+            db.SaveChanges();
+            db.Bookings.Remove(data);
+            db.SaveChanges();
+
+            return RedirectToAction("fetcchbookingbyid");
+        }
+
+
 
 
 
