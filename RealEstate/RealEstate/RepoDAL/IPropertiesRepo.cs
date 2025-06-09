@@ -30,6 +30,7 @@ namespace RealEstate.RepoDAL
 
 
 
+
         void booking(PropertyReviewViewModel vs);
 
         List<Booking> fetchbooking();
@@ -44,6 +45,9 @@ namespace RealEstate.RepoDAL
 
 
         
+
+        //List<Property> GetPaginatedProperties(int page, int pageSize, out int totalProperties);
+
 
 
         Appointment AddAppointment(Appointment ap);

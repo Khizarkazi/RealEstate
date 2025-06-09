@@ -41,10 +41,17 @@ namespace RealEstate.Services
             }
 
                                                                                       
+
             
 
 
-            var prod = new Property()
+            //var prod = new Property()
+
+            var prod = new Models.Property()
+
+
+            //var prod = new Property()
+
 
             {
                 Title = view.Title,
@@ -211,7 +218,8 @@ namespace RealEstate.Services
             totalProperties = query.Count();
 
             return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-        }
+    }
+
 
 
 
@@ -236,22 +244,6 @@ namespace RealEstate.Services
         }
 
 
-        //public async Task UploadFileAsync(IFormFile file, string fpath)
-        //{
-        //    string? directory = Path.GetDirectoryName(fpath);
-        //    if (!Directory.Exists(directory))
-        //    {
-        //        Directory.CreateDirectory(directory);
-        //    }
-
-        //    if (!File.Exists(fpath))
-        //    {
-        //        using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
-        //        {
-        //            await file.CopyToAsync(stream);
-        //        }
-        //    }
-        //}
 
 
 

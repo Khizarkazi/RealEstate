@@ -31,6 +31,7 @@ builder.Services.AddScoped<ILeaseAgreementRepo,LeaseAgreementServices>();
 
 builder.Services.AddScoped<ITransactionRepo,TransactionService >();
 builder.Services.AddScoped<IInquiryRepo, InquiryService>();
+
 // ✅ Register session services
 builder.Services.AddDistributedMemoryCache(); // Required
 builder.Services.AddSession(); // Required
