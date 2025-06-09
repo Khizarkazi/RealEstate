@@ -1,0 +1,16 @@
+﻿@model RealEstate.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Error Page";
+}
+
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        <h4 class="alert-heading">An error occurred</h4>
+        <hr />
+        <p><strong>Message:</strong> @Model.ExceptionMessage</p>
+        <p><strong>Type:</strong> @Model.ExceptionType</p>
+        <p><strong>Time:</strong> @Model.ExceptionTime.ToString("f")</p>
+        <p><strong>Path:</strong> @Model.Path</p>
+    </div>
+</div>

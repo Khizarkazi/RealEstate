@@ -305,7 +305,6 @@ namespace RealEstate.Services
         {
             var data = db.Bookings.Find(id.BookingId);
 
-            if (data == null) return;
 
             data.PropertyId = id.PropertyId;
             data.Status = id.Status;

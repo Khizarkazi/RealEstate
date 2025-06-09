@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@model Property
+<!DOCTYPE html>
 <html lang="en">
 <head>  
     <meta charset="UTF-8">
@@ -122,6 +123,7 @@
                                          <li><a asp-controller="LeaseAgreement" asp-action="AddLease">Add Lease</a></li>
                                           <li><a asp-controller="LeaseAgreement" asp-action="Index">view Lease</a></li>
                                         <li><a asp-controller="Inquiry" asp-action="AdminInbox">View Inquiries</a></li>
+                                        <li><a asp-controller="Bidding" asp-action="Details" asp-route-propertyId="@Model.PropertyId" class="btn btn-info">View / Bid</a></li>
 
                                         
                                     }

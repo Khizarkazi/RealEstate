@@ -23,6 +23,8 @@ namespace RealEstate.Data
         public DbSet<Sales> Sales { get; set; }
         public DbSet<Samplesales> Samplesales { get; set; }
         public DbSet<Inquiry> Inquiries { get; set; }
+        public DbSet<Bid> Bids { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

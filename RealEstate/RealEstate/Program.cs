@@ -1,12 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RealEstate.Data;
+using RealEstate.Filter;
 using RealEstate.RepoDAL;
 using RealEstate.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<GlobalExceptionFilter>();
+});
+
 
 // Register database context
 builder.Services.AddDbContext<RealEstateContext>

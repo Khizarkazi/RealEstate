@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RealEstate.Models
 {
@@ -24,7 +25,7 @@ namespace RealEstate.Models
 
         [Required]
         public string Role { get; set; } // Use enum or custom validation if needed
-
+        [NotMapped]
         public IFormFile ProfilePicture { get; set; }
 
         public DateTime CreatedAt { get; set; }
