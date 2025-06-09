@@ -213,6 +213,11 @@ namespace RealEstate.Services
             return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
         }
 
+
+
+
+
+
         public void UploadFile(IFormFile file, string fpath)
         {
             string? directory = Path.GetDirectoryName(fpath);
@@ -231,22 +236,22 @@ namespace RealEstate.Services
         }
 
 
-        public async Task UploadFileAsync(IFormFile file, string fpath)
-        {
-            string? directory = Path.GetDirectoryName(fpath);
-            if (!Directory.Exists(directory))
-            {
-                Directory.CreateDirectory(directory);
-            }
+        //public async Task UploadFileAsync(IFormFile file, string fpath)
+        //{
+        //    string? directory = Path.GetDirectoryName(fpath);
+        //    if (!Directory.Exists(directory))
+        //    {
+        //        Directory.CreateDirectory(directory);
+        //    }
 
-            if (!File.Exists(fpath))
-            {
-                using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
-                {
-                    await file.CopyToAsync(stream);
-                }
-            }
-        }
+        //    if (!File.Exists(fpath))
+        //    {
+        //        using (FileStream stream = new FileStream(fpath, FileMode.Create, FileAccess.Write))
+        //        {
+        //            await file.CopyToAsync(stream);
+        //        }
+        //    }
+        //}
 
 
 
@@ -277,6 +282,7 @@ namespace RealEstate.Services
 
 
         public List<Booking> fetcchbookingbyid(int userid)
+
         {
             return db.Bookings.Where(x => x.UserId==userid).ToList();
         }
