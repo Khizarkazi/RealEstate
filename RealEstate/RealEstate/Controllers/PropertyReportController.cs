@@ -13,7 +13,7 @@ namespace RealEstate.Controllers
             _reportRepo = reportRepo;
         }
 
-        public async Task<IActionResult> PorpertyReportview()
+        public async Task<IActionResult> PropertyReportview()
         {
             var report = await _reportRepo.GetPropertyReportAsync();
             return View("PropReport", report);

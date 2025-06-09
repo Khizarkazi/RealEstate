@@ -41,10 +41,17 @@ namespace RealEstate.Services
             }
 
                                                                                       
+
             
 
 
-            var prod = new Property()
+            //var prod = new Property()
+
+            var prod = new Models.Property()
+
+
+            //var prod = new Property()
+
 
             {
                 Title = view.Title,
@@ -211,9 +218,9 @@ namespace RealEstate.Services
             totalProperties = query.Count();
 
             return query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-        }
+    }
 
-        public void UploadFile(IFormFile file, string fpath)
+    public void UploadFile(IFormFile file, string fpath)
         {
             string? directory = Path.GetDirectoryName(fpath);
             if (!Directory.Exists(directory))
@@ -229,6 +236,7 @@ namespace RealEstate.Services
                 }
             }
         }
+
 
 
         public async Task UploadFileAsync(IFormFile file, string fpath)

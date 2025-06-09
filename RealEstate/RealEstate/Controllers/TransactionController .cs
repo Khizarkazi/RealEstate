@@ -14,12 +14,12 @@ namespace RealEstate.Controllers
 
         public IActionResult History()
         {
-            var userIdStr = HttpContext.Session.GetString("UserId");
+            var userIdStr = HttpContext.Session.GetString("UserID");
 
             if (string.IsNullOrEmpty(userIdStr) || !int.TryParse(userIdStr, out int userId))
             {
                 TempData["Error"] = "Please login first.";
-                return RedirectToAction("Login", "Admin");
+                return RedirectToAction("Dashboard", "Tenant");
             }
 
             var transactions = _service.GetTransactionsByUserId(userId);

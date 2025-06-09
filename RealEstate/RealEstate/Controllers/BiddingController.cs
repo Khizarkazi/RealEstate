@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace RealEstate.Controllers
 {
+  
     public class BiddingController : Controller
     {
         private readonly RealEstateContext _context;
@@ -23,7 +24,13 @@ namespace RealEstate.Controllers
                 .Include(p => p.Owner)
                 .FirstOrDefault(p => p.PropertyId == propertyId);
 
+            if (property == null)
+            {
+                return NotFound(); // Or redirect to an error page
+            }
+
             var bids = _context.Bids
+                .Include(b => b.User) // Include the User to avoid null reference in view
                 .Where(b => b.PropertyId == propertyId)
                 .OrderByDescending(b => b.BidAmount)
                 .ToList();
@@ -36,7 +43,6 @@ namespace RealEstate.Controllers
 
             return View(model);
         }
-
         [HttpPost]
         public IActionResult PlaceBid(int propertyId, decimal yourBidAmount)
         {

@@ -83,6 +83,7 @@
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.PropertyId" class="btn btn-warning btn-sm me-2">Edit</a>
                         <a asp-action="Delete" asp-route-id="@item.PropertyId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                        <li><a asp-controller="Bidding" asp-route-propertyId="@item.PropertyId" asp-action="Details">View / Bid</a></li>
                     </td>
                 </tr>
             }
