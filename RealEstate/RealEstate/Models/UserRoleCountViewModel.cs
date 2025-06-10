@@ -8,7 +8,7 @@ namespace RealEstate.Models
     public enum UserRole
     {
         Admin,
-        Owner,
+        //Owner,
         Agent,
         Buyer,
         Seller,

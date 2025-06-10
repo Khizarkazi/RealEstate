@@ -1,4 +1,4 @@
-﻿@model PropertyReportView
+﻿@* @model PropertyReportView
 
 <h2>Property Listings Report</h2>
 
@@ -24,4 +24,64 @@
             <td>@item.Value</td>
         </tr>
     }
-</table>
+</table> *@
+
+@model PropertyReportView
+
+<!-- Bootstrap 5 + Icons (if not already included) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-success text-white">
+            <h4 class="mb-0"><i class="bi bi-house-check-fill"></i> Property Listings by Status</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Status</th>
+                        <th class="text-center">Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.StatusCounts)
+                    {
+                        <tr>
+                            <td>@item.Key</td>
+                            <td class="text-center fw-semibold">@item.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-info text-white">
+            <h4 class="mb-0"><i class="bi bi-geo-alt-fill"></i> Property Listings by City</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>City</th>
+                        <th class="text-center">Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.CityCounts)
+                    {
+                        <tr>
+                            <td>@item.Key</td>
+                            <td class="text-center">@item.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

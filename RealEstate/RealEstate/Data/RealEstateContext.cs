@@ -24,7 +24,13 @@ namespace RealEstate.Data
         public DbSet<Samplesales> Samplesales { get; set; }
         public DbSet<Inquiry> Inquiries { get; set; }
         public DbSet<Bid> Bids { get; set; }
+<<<<<<< Updated upstream
         public DbSet<Notification> Notifications { get; set; }
+=======
+
+    
+
+>>>>>>> Stashed changes
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
