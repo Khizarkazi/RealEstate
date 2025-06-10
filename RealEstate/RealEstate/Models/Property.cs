@@ -51,6 +51,10 @@ namespace RealEstate.Models
         public ICollection<Review>? Reviews { get; set; }
         public ICollection<LeaseAgreement>? LeaseAgreements { get; set; }
 
+        public ICollection<Bid> Bids { get; set; } = new List<Bid>();
 
+        public int? WinningBidId { get; set; }
+        [ForeignKey("WinningBidId")] 
+        public Bid WinningBid { get; set; }
     }
 }

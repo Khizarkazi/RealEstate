@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RealEstate.Models.Bid>
+
+@{
+    ViewData["Title"] = "My Bids";
+}
+
+<h2>My Bids</h2>
+
+@if (!Model.Any())
+{
+    <p>You haven't placed any bids yet.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>Bid Amount</th>
+                <th>Bid Time</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var bid in Model)
+            {
+                <tr>
+                    <td>@bid.Property?.Title</td>
+                    <td>₹@bid.BidAmount</td>
+                    <td>@bid.BidTime</td>
+                    <td>
+                        @if (bid.IsWinningBid)
+                        {
+                            <span class="text-success">Accepted ✅</span>
+                        }
+                        else
+                        {
+                            <span class="text-muted">Pending ⏳</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

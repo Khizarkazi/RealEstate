@@ -19,6 +19,8 @@
                     <p class="card-text"><strong>Type:</strong> @p.PropertyType</p>
                     <p class="card-text"><strong>Status:</strong> <span class="badge bg-info">@p.Status</span></p>
                     <p class="card-text"><strong>Posted On:</strong> @p.CreatedAt.ToShortDateString()</p>
+                    <a asp-controller="Bidding" asp-action="List" asp-route-propertyId="@p.PropertyId">View Bids</a>
+
                 </div>
             </div>
         </div>

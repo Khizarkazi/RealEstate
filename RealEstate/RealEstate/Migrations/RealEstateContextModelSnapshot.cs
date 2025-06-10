@@ -135,6 +135,9 @@ namespace RealEstate.Migrations
                     b.Property<DateTime>("BidTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsWinningBid")
+                        .HasColumnType("bit");
+
                     b.Property<int>("PropertyId")
                         .HasColumnType("int");
 
@@ -247,6 +250,34 @@ namespace RealEstate.Migrations
                     b.ToTable("LeaseAgreements");
                 });
 
+            modelBuilder.Entity("RealEstate.Models.Notification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
+                });
+
             modelBuilder.Entity("RealEstate.Models.ProfilePicView", b =>
                 {
                     b.Property<int>("UserId")
@@ -345,6 +376,9 @@ namespace RealEstate.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("WinningBidId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ZipCode")
                         .IsRequired()
                         .HasMaxLength(10)
@@ -355,6 +389,8 @@ namespace RealEstate.Migrations
                     b.HasIndex("ProfilePicViewUserId");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("WinningBidId");
 
                     b.ToTable("Properties");
                 });
@@ -592,8 +628,8 @@ namespace RealEstate.Migrations
 
             modelBuilder.Entity("RealEstate.Models.Bid", b =>
                 {
-                    b.HasOne("RealEstate.Models.Property", "Property")
-                        .WithMany()
+                    b.HasOne("RealEstate.Models.Property", null)
+                        .WithMany("Bids")
                         .HasForeignKey("PropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -603,8 +639,6 @@ namespace RealEstate.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Property");
 
                     b.Navigation("User");
                 });
@@ -658,6 +692,17 @@ namespace RealEstate.Migrations
                     b.Navigation("Tenant");
                 });
 
+            modelBuilder.Entity("RealEstate.Models.Notification", b =>
+                {
+                    b.HasOne("RealEstate.Models.ProfilePicView", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("RealEstate.Models.Property", b =>
                 {
                     b.HasOne("RealEstate.Models.ProfilePicView", null)
@@ -670,7 +715,13 @@ namespace RealEstate.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("RealEstate.Models.Bid", "WinningBid")
+                        .WithMany()
+                        .HasForeignKey("WinningBidId");
+
                     b.Navigation("Owner");
+
+                    b.Navigation("WinningBid");
                 });
 
             modelBuilder.Entity("RealEstate.Models.Review", b =>
@@ -737,12 +788,16 @@ namespace RealEstate.Migrations
 
             modelBuilder.Entity("RealEstate.Models.ProfilePicView", b =>
                 {
+                    b.Navigation("Notifications");
+
                     b.Navigation("Properties");
                 });
 
             modelBuilder.Entity("RealEstate.Models.Property", b =>
                 {
                     b.Navigation("Appointments");
+
+                    b.Navigation("Bids");
 
                     b.Navigation("Bookings");
 

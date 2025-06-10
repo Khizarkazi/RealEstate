@@ -24,7 +24,7 @@ namespace RealEstate.Data
         public DbSet<Samplesales> Samplesales { get; set; }
         public DbSet<Inquiry> Inquiries { get; set; }
         public DbSet<Bid> Bids { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -18,62 +18,108 @@ namespace RealEstate.Controllers
             _context = context;
         }
 
-        public IActionResult Details(int propertyId)
+        // GET: Show the bidding page
+        public async Task<IActionResult> Place(int propertyId)
         {
-            var property = _context.Properties
-                .Include(p => p.Owner)
-                .FirstOrDefault(p => p.PropertyId == propertyId);
+            var property = await _context.Properties.FindAsync(propertyId);
+            if (property == null) return NotFound();
 
-            if (property == null)
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int userId = string.IsNullOrEmpty(userIdString) ? 0 : int.Parse(userIdString);
+
+            var viewModel = new PlaceBidViewModel
             {
-                return NotFound(); // Or redirect to an error page
-            }
-
-            var bids = _context.Bids
-                .Include(b => b.User) // Include the User to avoid null reference in view
-                .Where(b => b.PropertyId == propertyId)
-                .OrderByDescending(b => b.BidAmount)
-                .ToList();
-
-            var model = new BidViewModel
-            {
-                Property = property,
-                Bids = bids
+                PropertyId = property.PropertyId,
+                PropertyTitle = property.Title,
+                Price = property.Price,
+                UserId = userId
             };
 
-            return View(model);
+            return View(viewModel);
         }
+
+        // POST: Submit a bid
         [HttpPost]
-        public IActionResult PlaceBid(int propertyId, decimal yourBidAmount)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Place(PlaceBidViewModel model)
         {
-            var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)); // Assume authentication
-            var property = _context.Properties.FirstOrDefault(p => p.PropertyId == propertyId);
-            var highestBid = _context.Bids
-                .Where(b => b.PropertyId == propertyId)
-                .OrderByDescending(b => b.BidAmount)
-                .FirstOrDefault();
-
-            if (property == null)
-                return NotFound();
-
-            if (yourBidAmount <= property.Price || (highestBid != null && yourBidAmount <= highestBid.BidAmount))
+            if (!ModelState.IsValid)
             {
-                TempData["Error"] = "Your bid must be higher than the current highest bid.";
-                return RedirectToAction("Details", new { propertyId });
+                // Reload property info if validation failed
+                var property = await _context.Properties.FindAsync(model.PropertyId);
+                if (property != null)
+                {
+                    model.PropertyTitle = property.Title;
+                    model.Price = property.Price;
+                }
+                return View(model);
             }
 
-            var newBid = new Bid
+            var bid = new Bid
             {
-                PropertyId = propertyId,
-                UserId = userId,
-                BidAmount = yourBidAmount
+                PropertyId = model.PropertyId,
+                UserId = model.UserId,
+                BidAmount = model.BidAmount,
+                BidTime = DateTime.Now
             };
 
-            _context.Bids.Add(newBid);
-            _context.SaveChanges();
+            _context.Bids.Add(bid);
+            await _context.SaveChangesAsync();
 
-            TempData["Success"] = "Your bid was placed successfully!";
-            return RedirectToAction("Details", new { propertyId });
+            return RedirectToAction("Details", "Properties", new { id = model.PropertyId });
+        }
+
+        // List bids
+        [HttpGet]
+        public async Task<IActionResult> List(int propertyId)
+        {
+            var prop = await _context.Properties
+                .Include(p => p.Bids).ThenInclude(b => b.User)
+                .FirstOrDefaultAsync(p => p.PropertyId == propertyId);
+            if (prop == null) return NotFound();
+            return View(prop);
+        }
+
+        // Accept bid
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Accept(int bidId)
+        {
+            var bid = await _context.Bids
+                .Include(b => b.Property)
+                .Include(b => b.User)
+                .FirstOrDefaultAsync(b => b.BidId == bidId);
+
+            if (bid == null) return NotFound();
+
+            bid.IsWinningBid = true;
+            bid.Property.WinningBidId = bid.BidId;
+
+            _context.Notifications.Add(new Notification
+            {
+                UserId = bid.UserId,
+                Message = $"Congrats! You've won the bid for '{bid.Property.Title}'",
+                CreatedAt = DateTime.Now
+            });
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(List), new { propertyId = bid.PropertyId });
+        }
+        [HttpGet] [ValidateAntiForgeryToken]
+        // GET: Show buyer's bids and status (accepted or not)
+        public async Task<IActionResult> MyBids()
+        {
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (string.IsNullOrEmpty(userIdString)) return Unauthorized();
+            int userId = int.Parse(userIdString);
+
+            var myBids = await _context.Bids
+                .Where(b => b.UserId == userId)
+                .Include(b => b.Property)
+                .ToListAsync();
+
+            return View(myBids);
         }
     }
+
 }

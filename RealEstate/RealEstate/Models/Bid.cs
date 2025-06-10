@@ -9,20 +9,24 @@ namespace RealEstate.Models
         public int BidId { get; set; }
 
         [Required]
+        [ForeignKey("PropertyId")]
         public int PropertyId { get; set; }
 
-        [ForeignKey("PropertyId")]
+        [NotMapped]
         public Property Property { get; set; }
 
         [Required]
+        [ForeignKey("UserId")]
         public int UserId { get; set; }
 
-        [ForeignKey("UserId")]
+        
         public ProfilePicView User { get; set; }
 
         [Required]
         public decimal BidAmount { get; set; }
 
         public DateTime BidTime { get; set; } = DateTime.Now;
+
+        public bool IsWinningBid { get; set; } = false;
     }
 }
