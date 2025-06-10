@@ -175,6 +175,9 @@
                                 <span><i class="bi bi-house-door-fill me-1"></i>@property.PropertyType</span>
                                 <span><i class="bi bi-clock-history me-1"></i>@property.CreatedAt.ToString("dd MMM yyyy")</span>
                                 <span><i class="bi bi-person-circle me-1"></i>Owner ID: @property.UserId</span>
+                                    <a asp-controller="Bidding" asp-action="Place" asp-route-propertyId="@property.PropertyId" class="btn btn-success">
+                                        Place a Bid
+                                    </a>
                             </div>
                         </div>
                         </a>

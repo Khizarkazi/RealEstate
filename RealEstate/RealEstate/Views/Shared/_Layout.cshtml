@@ -128,9 +128,7 @@
                                          <li><a asp-controller="LeaseAgreement" asp-action="AddLease">Add Lease</a></li>
                                           <li><a asp-controller="LeaseAgreement" asp-action="Index">view Lease</a></li>
                                         <li><a asp-controller="Inquiry" asp-action="AdminInbox">View Inquiries</a></li>
-                                        <li class="nav-item">
-                                            <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="SalesReport">Reports</a>
-                                        </li>
+                                      
                                        
 
                                         
@@ -152,10 +150,12 @@
                                     else if (userRole == "Seller")
                                     {
                                         <li><a asp-controller="Seller" asp-action="Dashboard">Seller Dashboard</a></li>
+                                        
                                     }
                                     else if (userRole == "Tenant")
                                     {
                                         <li><a asp-controller="Tenant" asp-action="Dashboard">Tenant Dashboard</a></li>
+                                       
                                     }
 
                                     <li><a asp-controller="StartingPage" asp-action="Logout">Logout</a></li>

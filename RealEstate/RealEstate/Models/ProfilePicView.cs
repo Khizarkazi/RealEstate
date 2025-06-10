@@ -31,6 +31,6 @@ namespace RealEstate.Models
         public DateTime CreatedAt { get; set; }
 
         public ICollection<Property>? Properties { get; set; }
-
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

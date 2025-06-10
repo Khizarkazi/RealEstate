@@ -1,0 +1,26 @@
+﻿@model RealEstate.Models.Property
+<h2>Bids for @Model.Title</h2>
+<table class="table">
+    <thead><tr><th>Bidder</th><th>Amount</th><th>Time</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+        @foreach (var b in Model.Bids.OrderByDescending(b => b.BidAmount))
+        {
+            <tr>
+                <td>@b.User.FirstName @b.User.LastName</td>
+                <td>@b.BidAmount</td>
+                <td>@b.BidTime</td>
+                <td>@(b.IsWinningBid ? "🏆" : "")</td>
+                <td>
+                    @if (!b.IsWinningBid)
+                    {
+                        <form asp-action="Accept" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="bidId" value="@b.BidId" />
+                            <button class="btn btn-sm btn-success">Accept</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

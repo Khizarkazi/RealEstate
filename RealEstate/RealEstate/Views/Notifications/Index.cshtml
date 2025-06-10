@@ -1,0 +1,18 @@
+﻿@model IEnumerable<RealEstate.Models.Notification>
+<h2>Your Notifications</h2>
+<ul class="list-group">
+    @foreach (var n in Model)
+    {
+        <li class="list-group-item @(n.IsRead ? "text-muted" : "font-weight-bold")">
+            @n.Message - @n.CreatedAt
+            @if (!n.IsRead)
+            {
+                <form asp-action="MarkRead" method="post" class="float-right">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@n.Id" />
+                    <button class="btn btn-sm btn-link">Mark read</button>
+                </form>
+            }
+        </li>
+    }
+</ul>
