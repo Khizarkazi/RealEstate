@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using RealEstate.Data;
 using RealEstate.Models;
 using RealEstate.RepoDAL;
@@ -308,9 +309,11 @@ namespace RealEstate.Services
             data.Status = id.Status;
             data.UserId=id.UserId;
             data.BookingDate=id.BookingDate;
-            
 
-            db.Bookings.Update(data);
+
+            //db.Bookings.Update(data);
+            db.Entry(data).State = EntityState.Modified;
+
             db.SaveChanges();
         }
 
